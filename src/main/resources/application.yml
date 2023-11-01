@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:database.db
+  jpa:
+    show-sql: true
+    database-platform: org.sqlite.hibernate.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create
+  # fix for Swagger-ui path matching
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+app:
+  jwtSecret: s3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3t
+  jwtExpirationMs: 1200000  # 20 minutes
