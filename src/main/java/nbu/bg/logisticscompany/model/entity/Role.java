@@ -19,4 +19,23 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private UserRole name;
+
+    public Role(String name) {
+        switch (name) {
+            case "Admin":
+                this.name = UserRole.ADMIN;
+                break;
+            case "Client":
+                this.name = UserRole.CLIENT;
+                break;
+            case "OfficeEmployee":
+                this.name = UserRole.OFFICE_EMPLOYEE;
+                break;
+            case "Courier":
+                this.name = UserRole.COURIER;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid user role");
+        }
+    }
 }
