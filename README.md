@@ -35,7 +35,8 @@ How to run the project:
 2. Run the following maven command:
    `mvn clean install
    `
-   *Note: Make sure Java 11 is in the PATH*
+
+   *Note: Make sure Java 11 is installed and in the PATH variable*
 
 Alternatively, clone the repository and import in your IDE
 

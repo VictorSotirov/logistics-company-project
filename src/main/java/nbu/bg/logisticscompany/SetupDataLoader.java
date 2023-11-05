@@ -31,7 +31,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         User admin = User.builder()
                 .roles(new HashSet<>(List.of(new Role("Admin"))))
                 .username("admin")
-                .password(passwordEncoder.encode("nimda"))
+                .password(passwordEncoder.encode("admin"))
                 .build();
 
         User courier = User.builder()
