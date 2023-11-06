@@ -20,68 +20,71 @@
                 <div class="text-center">
                     <h3 class="text-primary">Влизане в профил</h3>
                 </div>
-                <form action="">
+                <div>
                     <div class="p-4">
                         <div class="input-group mb-3">
                                     <span class="input-group-text bg-primary"><i
                                             class="bi bi-person-plus-fill text-white"></i></span>
-                            <input type="text" class="form-control" placeholder="Потребителско име" id="username">
+                            <input type="text" class="form-control" placeholder="Потребителско име" id="username-value">
                         </div>
                         <div class="input-group mb-3">
                                     <span class="input-group-text bg-primary"><i
                                             class="bi bi-key-fill text-white"></i></span>
-                            <input type="password" class="form-control" placeholder="Парола" id="password">
+                            <input type="password" class="form-control" placeholder="Парола" id="password-value">
                         </div>
-                        <button class="btn btn-primary text-center mt-2" type="submit">
+                        <button class="btn btn-primary text-center mt-2" type="submit" id="sign-in-button">
                             Влизане
                         </button>
                         <p class="text-center mt-5">Нямате създаден профил?
                             <span class="text-primary" id='sign-up-button'>Регистрация</span>
                         </p>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script>
-
-
-    function submitRegisterForm() {
-        var username = document.querySelector('#username').value;
-        var password = document.querySelector('#password').value;
+    async function submitRegisterForm() {
+        var username = document.querySelector('#username-value').value;
+        var password = document.querySelector('#password-value').value;
         fetch('http://localhost:8080/api/auth/login', {
             method: 'POST',
-            headers: new Headers({'content-type': 'application/json'}),
+            headers: new Headers({
+                "Content-Type": "application/json"
+            }),
             body: JSON.stringify(
                 {
                     "username": username,
                     "password": password
                 }
             )
-        }).then(function (response) {
+        }).then(async function (response) {
             if (!response.ok) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Грешка!',
                     text: 'Нещо се обърка!',
                     footer: '<a href="/register.html">Регистрация</a>'
-                })
+                });
             } else {
-                localStorage.setItem("user", response.json())
-                window.location.replace("/home.html")
+                const json = await response.json();
+                localStorage.setItem("user", JSON.stringify(json));
+                window.location.replace("/home.html");
             }
+        }).catch(function (reason) {
+            console.log(reason);
         })
 
     }
 
-    var submitBtn = document.querySelector('button');
+    var submitBtn = document.querySelector('#sign-in-button');
     submitBtn.addEventListener('click', submitRegisterForm);
 
     var signUpButton = document.querySelector("#sign-up-button")
-    signUpButton.addEventListener('mouseenter', () => signUpButton.classList.add('border', 'border-primary'))
-    signUpButton.addEventListener('mouseleave', () => signUpButton.classList.remove('border', 'border-primary'))
+    signUpButton.addEventListener('mouseenter', () => signUpButton.classList.add('border', 'border-primary'));
+    signUpButton.addEventListener('mouseleave', () => signUpButton.classList.remove('border', 'border-primary'));
 
     signUpButton.addEventListener('click', () => window.location.replace("/register.html"));
 </script>
