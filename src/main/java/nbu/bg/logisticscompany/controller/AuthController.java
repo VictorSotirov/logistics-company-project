@@ -5,6 +5,7 @@ import nbu.bg.logisticscompany.model.dto.JwtResponse;
 import nbu.bg.logisticscompany.model.dto.UserLoginDto;
 import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 import nbu.bg.logisticscompany.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDto userRegisterDto) {
-        return userService.register(userRegisterDto);
+        if (userService.register(userRegisterDto)){
+           return ResponseEntity.ok("User registered successfully!");
+        }
+        return new ResponseEntity<>("User couldn't be registered successfully!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
