@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.exceptions.InvalidRegistration;
 import nbu.bg.logisticscompany.model.dto.JwtResponse;
 import nbu.bg.logisticscompany.model.dto.UserDetailsImpl;
 import nbu.bg.logisticscompany.model.dto.UserLoginDto;
@@ -8,7 +9,6 @@ import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 import nbu.bg.logisticscompany.model.entity.Role;
 import nbu.bg.logisticscompany.model.entity.User;
 import nbu.bg.logisticscompany.model.entity.UserRole;
-import nbu.bg.logisticscompany.repository.RoleRepository;
 import nbu.bg.logisticscompany.repository.UserRepository;
 import nbu.bg.logisticscompany.service.UserService;
 import nbu.bg.logisticscompany.util.JwtUtils;
@@ -54,11 +54,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> register(UserRegisterDto userRegisterDto) {
+    public boolean register(UserRegisterDto userRegisterDto) {
         if (userRepository.existsByUsername(userRegisterDto.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Username is already taken!");
+            throw new InvalidRegistration("Username is already taken!");
         }
 
         User newUser = User
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         userRepository.save(newUser);
 
-        return ResponseEntity.ok("User registered successfully!");
+        return true;
 
     }
 

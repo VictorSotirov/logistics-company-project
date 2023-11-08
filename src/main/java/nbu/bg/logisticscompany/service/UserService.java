@@ -8,5 +8,5 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
     ResponseEntity<JwtResponse> login(UserLoginDto userLoginDto);
 
-    ResponseEntity<String> register(UserRegisterDto userRegisterDto);
+    boolean register(UserRegisterDto userRegisterDto);
 }
