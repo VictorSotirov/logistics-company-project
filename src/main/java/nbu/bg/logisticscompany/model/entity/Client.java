@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Client")
+@Table(name = "client")
 public class Client extends User {
     @OneToMany(mappedBy = "receiver",
             fetch = FetchType.LAZY,

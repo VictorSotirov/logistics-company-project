@@ -1,26 +1,31 @@
 package nbu.bg.logisticscompany.model.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "Company")
+@Table(name = "company")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company {
+@Builder
+public class Company
+{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Size(max = 20)
     private String name;
 
+    @Size(max = 30)
     private String address;
 
     @OneToMany(mappedBy = "company",
