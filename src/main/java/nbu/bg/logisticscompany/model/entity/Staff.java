@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "staff")
+@Table(name = "Staff")
 @Getter
 @Setter
 @AllArgsConstructor

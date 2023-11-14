@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "company")
+@Table(name = "Company")
 @Getter
 @Setter
 @AllArgsConstructor
