@@ -20,4 +20,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    //Added exception handling for the Company
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public  ResponseEntity<Object> handleCompanyNotFound(final Exception exception)
+    {
+        exception.printStackTrace();
+
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

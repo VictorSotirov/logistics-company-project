@@ -1,7 +1,7 @@
 package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.service.CompanyService;
@@ -17,7 +17,8 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public void updateCompanyName(Long companyId, String newCompanyName)
     {
-        Company company = companyRepository.findById(companyId).orElse(null);
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
         if (company != null)
         {
@@ -31,7 +32,8 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public void updateCompanyAddress(Long companyId, String newCompanyAddress)
     {
-        Company company = companyRepository.findById(companyId).orElse(null);
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
         if (company != null)
         {
@@ -45,7 +47,8 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public void deleteCompany(Long companyId)
     {
-        Company company = companyRepository.findById(companyId).orElse(null);
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
         if (company != null)
         {
