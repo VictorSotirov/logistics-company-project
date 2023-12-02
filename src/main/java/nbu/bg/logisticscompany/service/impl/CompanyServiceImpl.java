@@ -20,12 +20,9 @@ public class CompanyServiceImpl implements CompanyService
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
-        if (company != null)
-        {
-            company.setName(newCompanyName);
+        company.setName(newCompanyName);
 
-            companyRepository.save(company);
-        }
+        companyRepository.save(company);
     }
 
     //Update the company address by first acquiring it from the db
@@ -35,12 +32,9 @@ public class CompanyServiceImpl implements CompanyService
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
-        if (company != null)
-        {
-            company.setAddress(newCompanyAddress);
+        company.setAddress(newCompanyAddress);
 
-            companyRepository.save(company);
-        }
+        companyRepository.save(company);
     }
 
     //Delete the company from the db based on its id
@@ -50,9 +44,6 @@ public class CompanyServiceImpl implements CompanyService
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
 
-        if (company != null)
-        {
-            companyRepository.deleteById(companyId);
-        }
+        companyRepository.deleteById(companyId);
     }
 }
