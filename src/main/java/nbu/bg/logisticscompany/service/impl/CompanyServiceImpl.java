@@ -18,6 +18,8 @@ public class CompanyServiceImpl implements CompanyService
 {
     private final CompanyRepository companyRepository;
 
+    //Method for creating a company if the task required it
+
     @Override
     public void updateCompany(Long companyId, CompanyDto companyToUpdate)
     {
