@@ -2,10 +2,15 @@ package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
+import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.service.CompanyService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -13,37 +18,43 @@ public class CompanyServiceImpl implements CompanyService
 {
     private final CompanyRepository companyRepository;
 
-    //Update the company name by first acquiring it from the db
     @Override
-    public void updateCompanyName(Long companyId, String newCompanyName)
+    public void updateCompany(Long companyId, CompanyDto companyToUpdate)
     {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
+        if (companyId == null || companyToUpdate == null)
+        {
+            throw new IllegalArgumentException("Invalid company");
+        }
 
-        company.setName(newCompanyName);
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException("Company with id " + companyId + " does not exist."));
+
+        company.setName(companyToUpdate.getCompanyName());
+
+        company.setAddress(companyToUpdate.getCompanyAddress());
 
         companyRepository.save(company);
     }
 
-    //Update the company address by first acquiring it from the db
-    @Override
-    public void updateCompanyAddress(Long companyId, String newCompanyAddress)
-    {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
-
-        company.setAddress(newCompanyAddress);
-
-        companyRepository.save(company);
-    }
-
-    //Delete the company from the db based on its id
     @Override
     public void deleteCompany(Long companyId)
     {
+        if (companyId == null)
+        {
+            throw new IllegalArgumentException("Invalid company");
+        }
+
         Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException("Selected company does not exist."));
+                .orElseThrow(() -> new CompanyNotFoundException("Company with id " + companyId + " does not exist."));
 
         companyRepository.deleteById(companyId);
+    }
+
+    @Override
+    public Optional<CompanyDto> getCompanyData()
+    {
+        return StreamSupport.stream(companyRepository.findAll().spliterator(), false)
+                .findFirst()
+                .map(company -> new CompanyDto(company.getName(), company.getAddress()));
     }
 }
