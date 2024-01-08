@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.model.entity.Company;
+import nbu.bg.logisticscompany.model.entity.Office;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.service.CompanyService;
 import org.springframework.stereotype.Service;
@@ -59,4 +60,8 @@ public class CompanyServiceImpl implements CompanyService
                 .findFirst()
                 .map(company -> new CompanyDto(company.getName(), company.getAddress()));
     }
+
+
+    //public List<Office> getAllOfficesByCompanyId(Long companyId) Should persist in officeService or be implemented here
+
 }
