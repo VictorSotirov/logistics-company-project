@@ -32,6 +32,7 @@ public class Order {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_staff")
     private Staff staff;
+
     // TODO
     // private Staff courier;  (ManyToOne) with Staff
     // private Staff officeEmployee; (ManyToOne) with Staff

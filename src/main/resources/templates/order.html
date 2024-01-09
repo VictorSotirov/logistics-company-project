@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<body>
+<div layout:fragment="content" class="container">
+    <div class="py-5 text-center">
+        <h2>Deliver an order</h2>
+        <p class="lead">Thank you for choosing UPS for your delivery needs.
+            Our streamlined checkout process ensures a hassle-free experience, putting you in control of your delivery
+            order. Follow the simple steps below to finalize your transaction:</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8 order-md-1">
+
+            <h4 class="mb-3">Order details</h4>
+
+            <form th:action="@{/order}" th:object="${order}" method="post" e>
+
+                <div class="mb-3">
+                    <label for="senderEmail">Sender email</label>
+                    <input type="email" th:field="*{senderEmail}" class="form-control" id="senderEmail"
+                           placeholder="you@example.com" required>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('senderEmail')}" th:errors="*{senderEmail}"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="receiverEmail">Receiver email</label>
+                    <input type="email" th:field="*{receiverEmail}" class="form-control" id="receiverEmail"
+                           placeholder="you@example.com" required>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('receiverEmail')}" th:errors="*{receiverEmail}"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="deliveryAddress">Delivery Address</label>
+                    <input type="text" th:field="*{deliveryAddress}" class="form-control" id="deliveryAddress"
+                           placeholder="1234 Main St" required>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('deliveryAddress')}" th:errors="*{deliveryAddress}"></span>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" th:field="*{isOfficeDelivery}" id="isOfficeDelivery"
+                           class="custom-control-input">
+                    <label class="custom-control-label" for="isOfficeDelivery">Is office pickup?</label>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('isOfficeDelivery')}" th:errors="*{isOfficeDelivery}"></span>
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+
+                <div class="mb-3">
+                    <label for="isOfficeDelivery">Package weight</label>
+                    <input type="number" step="0.01" min="0" id="weight" th:field="*{weight}">
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></span>
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <h5 class="mb-3">Total Price</h5>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control" step="0.01" min="0" id="totalPrice" th:field="*{totalPrice}" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Calculate</button>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('totalPrice')}" th:errors="*{totalPrice}"></span>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Create order</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+</body>
