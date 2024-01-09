@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+<body>
+<div layout:fragment="content" class="container">
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-3">Welcome to UPS </h1>
+        <h3 class="display-4"> Your Trusted Logistics Partner </h3>
+        <p class="lead">
+            At UPS, we redefine logistics by seamlessly connecting supply chains and delivering unparalleled solutions
+            to meet your unique transportation and distribution needs. With a relentless commitment to excellence, we
+            take pride in optimizing your business operations and ensuring the efficient movement of goods across the
+            globe.
+        </p>
+        <br>
+        <h1 class="display-4">Pricing</h1>
+
+        <div class="container">
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Regular</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Delivery within 5 business days</li>
+                            <li>Up to 10 KG packages</li>
+                            <li>Email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Click here</button>
+                    </div>
+                </div>
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Priority</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>20 users included</li>
+                            <li>10 GB of storage</li>
+                            <li>Priority email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-primary">Click here</button>
+                    </div>
+                </div>
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Enterprise</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>30 users included</li>
+                            <li>15 GB of storage</li>
+                            <li>Phone and email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-primary">Click here</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        if (localStorage.getItem("user") === null) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Please log in!',
+                footer: '<a href="/login">Log in</a>'
+            });
+            window.location.replace("/login")
+        }
+    </script>
+
+</div>
+</body>
+</html>
