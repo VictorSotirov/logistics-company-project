@@ -11,7 +11,7 @@
 
     <div class="row">
 
-        <div class="col-md-8 order-md-1">
+        <div class="col-md-12 order-md-1">
 
             <h4 class="mb-3">Order details</h4>
 
@@ -44,10 +44,9 @@
                     </div>
                 </div>
 
-                <hr class="mb-4">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" th:field="*{isOfficeDelivery}" id="isOfficeDelivery"
-                           class="custom-control-input">
+                           class="custom-control-input" oninput="calculateTotal()">
                     <label class="custom-control-label" for="isOfficeDelivery">Is office pickup?</label>
                     <div class="invalid-feedback">
                         <span th:if="${#fields.hasErrors('isOfficeDelivery')}" th:errors="*{isOfficeDelivery}"></span>
@@ -58,7 +57,8 @@
 
                 <div class="mb-3">
                     <label for="isOfficeDelivery">Package weight</label>
-                    <input type="number" step="0.01" min="0" id="weight" th:field="*{weight}">
+                    <input type="number" step="0.01" min="0" id="weight" th:field="*{weight}" class="form-control"
+                           oninput="calculateTotal()">
                     <div class="invalid-feedback">
                         <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></span>
                     </div>
@@ -69,8 +69,11 @@
 
                 <div class="input-group mb-3">
                     <span class="input-group-text">$</span>
-                    <input type="number" class="form-control" step="0.01" min="0" id="totalPrice" th:field="*{totalPrice}" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Calculate</button>
+                    <input type="number" class="form-control" step="0.01" min="0" id="totalPrice"
+                           th:field="*{totalPrice}" aria-describedby="button-addon2" oninput="calculateTotal()">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                            onclick="calculateTotal()">Calculate
+                    </button>
                     <div class="invalid-feedback">
                         <span th:if="${#fields.hasErrors('totalPrice')}" th:errors="*{totalPrice}"></span>
                     </div>
@@ -82,6 +85,56 @@
         </div>
     </div>
 
+
+    <script type="text/javascript">
+        function calculateTotal() {
+            const ECONOMY_PRICE = parseFloat("4.40");
+            const ECONOMY_ADD_ON = parseFloat("1.48");
+            const PREMIUM_ECONOMY_PRICE = parseFloat("6.13");
+            const PREMIUM_ECONOMY_ADD_ON = parseFloat("4.25");
+            const PRIORITY_PRICE = parseFloat("14.49");
+            const PRIORITY_ADD_ON = parseFloat("13.98");
+            const PRIORITY_EXTRA_KG_ADD_ON = parseFloat("0.56");
+
+            let isOfficeDelivery = document.getElementById("isOfficeDelivery").checked;
+            console.log("input", "isOfficeDelivery", isOfficeDelivery);
+            let weight = document.getElementById("weight").value;
+            let inputWeight = parseFloat(weight);
+            if (typeof inputWeight === 'number' && !Number.isNaN(inputWeight)) {
+                inputWeight = parseFloat(weight);
+            } else {
+                inputWeight = parseFloat("0");
+            }
+            var totalPrice = parseFloat("0");
+
+            if (inputWeight <= parseFloat("3")) {
+                if (isOfficeDelivery) {
+                    totalPrice = ECONOMY_PRICE;
+                } else {
+                    totalPrice = ECONOMY_PRICE + ECONOMY_ADD_ON;
+                }
+            } else if (inputWeight <= parseFloat("10")) {
+                if (isOfficeDelivery) {
+                    totalPrice = PREMIUM_ECONOMY_PRICE;
+                } else {
+                    totalPrice = PREMIUM_ECONOMY_PRICE + PREMIUM_ECONOMY_ADD_ON;
+                }
+            } else {
+                let remainingKg = Math.floor(inputWeight - parseFloat("10"));
+                let remainingKgPrice = remainingKg * PRIORITY_EXTRA_KG_ADD_ON;
+                if (isOfficeDelivery) {
+                    totalPrice = PRIORITY_PRICE + remainingKgPrice;
+                } else {
+                    totalPrice = PRIORITY_PRICE + PRIORITY_ADD_ON + remainingKgPrice;
+                }
+            }
+
+            //display the result
+            totalPrice = Math.round((totalPrice + Number.EPSILON) * 100) / 100;
+            document.getElementById('totalPrice').value = totalPrice
+            console.log(totalPrice);
+        }
+    </script>
 
 </div>
 </body>

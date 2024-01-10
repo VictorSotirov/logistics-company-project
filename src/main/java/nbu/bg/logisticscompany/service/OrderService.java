@@ -1,13 +1,11 @@
 package nbu.bg.logisticscompany.service;
 
 import nbu.bg.logisticscompany.model.dto.OrderDto;
-import nbu.bg.logisticscompany.model.entity.Order;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
-    List<Order> getAllOrders();
+    List<OrderDto> getAllOrders();
 
     void create(OrderDto order);
 

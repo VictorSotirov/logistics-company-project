@@ -1,5 +1,6 @@
 package nbu.bg.logisticscompany.controller;
 
+import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.service.OrderService;
 import org.springframework.stereotype.Controller;
@@ -12,23 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
+@AllArgsConstructor
 public class OrderController {
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @PostMapping("/order")
     public String createOrder(@Valid OrderDto order, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "order";
+            return "create-order";
         }
+        System.out.println(order);
         orderService.create(order);
         return "redirect:/orders";
-    }
-
-    @GetMapping("/order/{id}")
-    public String showUpdateOrder(@PathVariable("id") long id, Model model) throws Exception {
-        OrderDto order = orderService.getOrderByID(id);
-        model.addAttribute("order", order);
-        return "update-order";
     }
 
     @PostMapping("/order/{id}")
@@ -38,17 +34,10 @@ public class OrderController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) throws Exception {
+    public String deleteOrder(@PathVariable("id") long id, Model model) throws Exception {
         OrderDto order = orderService.getOrderByID(id);
         orderService.deleteOrder(order);
         return "redirect:/orders";
-    }
-
-    @GetMapping("/orders")
-    public String showOrdersList(Model model) {
-        // TODO return orders based on user role
-        model.addAttribute("ordersList", orderService.getAllOrders());
-        return "index";
     }
 
 }

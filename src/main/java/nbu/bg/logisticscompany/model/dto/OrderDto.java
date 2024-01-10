@@ -1,18 +1,19 @@
 package nbu.bg.logisticscompany.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import nbu.bg.logisticscompany.model.entity.OrderStatus;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderDto {
+    private Long id;
     @NotBlank
     private String senderEmail;
 
@@ -21,8 +22,9 @@ public class OrderDto {
 
     @NotBlank
     private String deliveryAddress;
-    @NotBlank
-    private boolean isOfficeDelivery;
+
+    @NotNull
+    private Boolean isOfficeDelivery;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Weight must be greater than or equal to 0.0")
     private Double weight;
@@ -30,13 +32,18 @@ public class OrderDto {
     @DecimalMin(value = "0.0", inclusive = true, message = "Price must be greater than or equal to 0.0")
     private Double totalPrice;
 
-    // https://fluca1978.github.io/2020/09/02/JavaPropertyNotReadable.html
-    public boolean getIsOfficeDelivery() {
-        return isOfficeDelivery;
-    }
+    private OrderStatus orderStatus;
 
-    public void setIsOfficeDelivery(boolean value) {
-        this.isOfficeDelivery = value;
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "senderEmail='" + senderEmail + '\'' +
+                ", receiverEmail='" + receiverEmail + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", isOfficeDelivery=" + isOfficeDelivery +
+                ", weight=" + weight +
+                ", totalPrice=" + totalPrice +
+                ", orderStatus=" + orderStatus +
+                '}';
     }
-
 }
