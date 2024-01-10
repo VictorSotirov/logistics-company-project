@@ -11,5 +11,7 @@ public interface OrderService {
 
     OrderDto getOrderByID(long id) throws Exception;
 
-    void deleteOrder(OrderDto order);
+    void deleteOrder(Long id) throws Exception;
+
+    void updateOrder(OrderDto order);
 }

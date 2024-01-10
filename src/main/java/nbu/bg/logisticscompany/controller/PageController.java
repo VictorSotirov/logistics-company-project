@@ -32,8 +32,9 @@ public class PageController {
     }
 
     @GetMapping("/order/{id}")
-    public String showUpdateOrder(@PathVariable("id") long id, Model model) throws Exception {
-        OrderDto order = orderService.getOrderByID(id);
+    public String showUpdateOrder(@PathVariable("id") String id, Model model) throws Exception {
+        //TODO validate ID
+        OrderDto order = orderService.getOrderByID(Long.parseLong(id));
         model.addAttribute("order", order);
         return "update-order";
     }

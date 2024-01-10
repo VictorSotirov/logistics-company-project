@@ -31,11 +31,22 @@ public class OrderServiceImpl implements OrderService {
     private OrderDto mapOrderToOrderDTO(Order o) {
         return OrderDto.builder()
                 .id(o.getId())
+                .orderStatus(o.getStatus())
                 .isOfficeDelivery(o.getIsOfficeDelivery())
                 .deliveryAddress(o.getDeliveryAddress())
                 .weight(o.getWeight())
                 .totalPrice(o.getPrice())
-                .orderStatus(o.getStatus())
+                .build();
+    }
+
+    private Order mapOrderDtoToOrder(OrderDto input) {
+        return Order.builder()
+                .id(input.getId())
+                .isOfficeDelivery(input.getIsOfficeDelivery())
+                .deliveryAddress(input.getDeliveryAddress())
+                .weight(input.getWeight())
+                .price(input.getTotalPrice())
+                .status(input.getOrderStatus())
                 .build();
     }
 
@@ -44,13 +55,8 @@ public class OrderServiceImpl implements OrderService {
         // TODO - Find sender by given input
         // TODO - Find receiver by given input
         // TODO - Find staff by given input
-        Order order = Order.builder()
-                .isOfficeDelivery(input.getIsOfficeDelivery())
-                .deliveryAddress(input.getDeliveryAddress())
-                .weight(input.getWeight())
-                .price(input.getTotalPrice())
-                .status(OrderStatus.SENT)
-                .build();
+        input.setOrderStatus(OrderStatus.SENT);
+        Order order = mapOrderDtoToOrder(input);
         orderRepository.save(order);
     }
 
@@ -64,9 +70,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(OrderDto order) {
-
+    public void deleteOrder(Long id) throws Exception {
+        System.out.println(id);
+        orderRepository.deleteById(id);
     }
 
-
+    @Override
+    public void updateOrder(OrderDto orderDto) {
+        Order order = mapOrderDtoToOrder(orderDto);
+        orderRepository.save(order);
+    }
 }

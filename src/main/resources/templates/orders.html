@@ -39,8 +39,14 @@
                         <td th:text="${order.weight}">Weight</td>
                         <td th:text="${order.totalPrice}">Total price</td>
                         <td>
-                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            <form th:method="get" th:action="@{'/order/' + ${order.id}}">
+                                <button type="submit" class="btn btn-success" onclick=""><i class="fa fa-edit"></i>
+                                </button>
+                            </form>
+                            <form th:method="DELETE" th:action="@{'/order/' + ${order.id}}">
+                                <button type="submit" class="btn btn-danger" onclick="confirm('Are you sure?')"><i
+                                        class="fa fa-trash"></i></button>
+                            </form>
                         </td>
                     <tr>
                     </tbody>

@@ -6,9 +6,7 @@ import nbu.bg.logisticscompany.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,16 +25,24 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/order/{id}")
-    public String updateOrder(@PathVariable("id") long id, @Valid OrderDto order,
+    @PutMapping("/order/{id}")
+    public String updateOrder(@PathVariable("id") String id, @Valid @ModelAttribute OrderDto order,
                               BindingResult result, Model model) {
+        System.out.println("Updating order");
+        if (result.hasErrors()) {
+            System.out.println("has errors");
+            return "update-order";
+        }
+        System.out.println("no errors");
+        orderService.updateOrder(order);
         return "redirect:/orders";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteOrder(@PathVariable("id") long id, Model model) throws Exception {
-        OrderDto order = orderService.getOrderByID(id);
-        orderService.deleteOrder(order);
+    @DeleteMapping("/order/{id}")
+    public String deleteOrder(@PathVariable("id") String id) throws Exception {
+        System.out.println("trying to delete");
+        orderService.deleteOrder(Long.valueOf(id));
+        System.out.println("success deleting");
         return "redirect:/orders";
     }
 

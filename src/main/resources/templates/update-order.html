@@ -3,19 +3,42 @@
 <body>
 <div layout:fragment="content" class="container">
     <div class="py-5 text-center">
-        <h2>Deliver an order</h2>
-        <p class="lead">Thank you for choosing UPS for your delivery needs.
-            Our streamlined checkout process ensures a hassle-free experience, putting you in control of your delivery
-            order. Follow the simple steps below to finalize your transaction:</p>
+        <h2>Order details</h2>
     </div>
 
     <div class="row">
 
         <div class="col-md-12 order-md-1">
 
-            <h4 class="mb-3">Create order</h4>
+            <h4 class="mb-3">Details on your order</h4>
 
-            <form th:action="@{/order}" th:object="${order}" method="post">
+            <form action="#" th:method="put" th:object="${order}" th:action="@{'/order/' + ${order.id}}">
+
+                <hr class="mb-4">
+
+                <div class="mb-3">
+                    <h5 class="d-flex mb-3">
+                        <span class="text-muted">Your order ID is:&nbsp;&nbsp;&nbsp;</span>
+                        <span class="badge badge-secondary padding-right: 0.6em; padding-left: 0.6em;"><div
+                                class="margin-bottom: .0rem !important" th:text=" ${id} "></div></span>
+                    </h5>
+                </div>
+
+                <hr class="mb-4">
+
+                <h5 class="mb-3">Order status:</h5>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <div th:each="status : ${T(nbu.bg.logisticscompany.model.entity.OrderStatus).values()}">
+                            <input th:field="*{orderStatus}" class="form-check-input" id="status" name="${status}"
+                                   required th:value="${status}" type="radio"/>
+                            <label class=" form-check-label" for="status" th:text="${status}"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
 
                 <div class="mb-3">
                     <label for="senderEmail">Sender email</label>
@@ -44,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="custom-control custom-checkbox">
+                <div class="custom-control custom-checkbox mb-3">
                     <input type="checkbox" th:field="*{isOfficeDelivery}" id="isOfficeDelivery"
                            class="custom-control-input" oninput="calculateTotal()">
                     <label class="custom-control-label" for="isOfficeDelivery">Is office pickup?</label>
@@ -80,7 +103,7 @@
                 </div>
 
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Create order</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Update order</button>
             </form>
         </div>
     </div>
