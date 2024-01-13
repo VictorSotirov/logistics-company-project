@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Data</title>
+</head>
+
+<body>
+<h2>Company Data</h2>
+
+<!-- Assuming CompanyDto has getCompanyName() and getCompanyAddress() methods -->
+<label for="companyName">Company Name:</label>
+<p th:text="${company.companyName}"></p>
+
+<label for="companyAddress">Company Address:</label>
+<p th:text="${company.companyAddress}"></p>
+
+<a th:href="@{/company/edit}">Edit Company Data</a>
+</body>
+
+</html>
