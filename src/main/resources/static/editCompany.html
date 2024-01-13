@@ -12,10 +12,8 @@
 <h2>Edit Company Data</h2>
 
 <form action="/company/edit" method="post" th:object="${company}">
-    <!-- Add a hidden field for the company ID -->
     <input type="hidden" id="companyId" name="companyId" th:value="${company.id}">
 
-    <!-- Assuming CompanyDto has getCompanyName() and getCompanyAddress() methods -->
     <label for="companyName">Company Name:</label>
     <input type="text" id="companyName" name="companyName" th:value="${company.companyName}" required>
 

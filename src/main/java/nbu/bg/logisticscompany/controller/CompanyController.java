@@ -1,24 +1,22 @@
 package nbu.bg.logisticscompany.controller;
 
+import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/company")
+@Controller
+@AllArgsConstructor
 public class CompanyController
 {
     private final CompanyService companyService;
-
-    public CompanyController(CompanyService companyService)
-    {
-        this.companyService = companyService;
-    }
 
     @GetMapping("/company")
     public ResponseEntity<CompanyDto> getCompanyData()
@@ -39,21 +37,20 @@ public class CompanyController
         {
             model.addAttribute("company", companyDtoOptional.get());
 
-            return "editCompany"; // This is the name of the HTML page for editing company data
+            return "editCompany";
         }
         else
         {
-            return "redirect:/"; // Redirect to home page or handle as needed
+            return "redirect:/";
         }
     }
 
+    //TODO
     @PostMapping("/edit")
     public String updateCompanyData(@RequestParam Long companyId, @ModelAttribute CompanyDto companyDto)
     {
-        // Update the company data using the provided CompanyDto
         companyService.updateCompany(companyId, companyDto);
 
-        // Redirect to the view page or handle as needed
         return "redirect:/company/edit";
     }
 }

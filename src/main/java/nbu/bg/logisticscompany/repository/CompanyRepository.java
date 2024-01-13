@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CompanyRepository extends CrudRepository<Company, Long>
+public interface CompanyRepository extends CrudRepository<Company, Long> /*might replace with JpaRepository*/
 {
     //Get company from db using its id
     Optional<Company> findById(Long id);

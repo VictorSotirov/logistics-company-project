@@ -1,5 +1,6 @@
 package nbu.bg.logisticscompany;
 
+import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.service.impl.CompanyServiceImpl;
 
 

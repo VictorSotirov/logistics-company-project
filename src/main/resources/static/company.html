@@ -10,15 +10,6 @@
 
 <body>
 <h2>Company Data</h2>
-
-<!-- Assuming CompanyDto has getCompanyName() and getCompanyAddress() methods -->
-<label for="companyName">Company Name:</label>
-<p th:text="${company.companyName}"></p>
-
-<label for="companyAddress">Company Address:</label>
-<p th:text="${company.companyAddress}"></p>
-
-<a th:href="@{/company/edit}">Edit Company Data</a>
 </body>
 
 </html>

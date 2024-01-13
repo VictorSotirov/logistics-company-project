@@ -2,6 +2,7 @@ package nbu.bg.logisticscompany.config.filter;
 
 import nbu.bg.logisticscompany.service.impl.UserDetailsServiceImpl;
 import nbu.bg.logisticscompany.util.JwtUtils;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,12 +21,14 @@ import java.util.List;
 import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Component
-public class JwtTokenFilter extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter
+{
     private final JwtUtils jwtTokenUtil;
     private final UserDetailsServiceImpl userDetailsService;
 
     public JwtTokenFilter(JwtUtils jwtTokenUtil,
-                          UserDetailsServiceImpl userDetailsService) {
+                          UserDetailsServiceImpl userDetailsService)
+    {
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
     }
@@ -67,5 +70,4 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
     }
-
 }

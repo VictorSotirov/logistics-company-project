@@ -106,19 +106,18 @@ public class SecurityConfig {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public API endpoints
-//                .antMatchers("/api/auth/register").permitAll()
-//                .antMatchers("/api/auth/login").permitAll()
-//                // Our public pages
-//                .antMatchers("/login.html").permitAll()
-//                .antMatchers("/register.html").permitAll()
-//                .antMatchers("/favicon.ico").permitAll()
-//                .antMatchers("/home.html").permitAll()
-//                .antMatchers("/index.html").permitAll()
-//                .antMatchers("/admin.html").permitAll()
-//                .antMatchers("/css/dashboard.css").permitAll()
-//                .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
-//                .anyRequest().authenticated()
-                .anyRequest().permitAll();
+                .antMatchers("/api/auth/register").permitAll()
+                .antMatchers("/api/auth/login").permitAll()
+                // Our public pages
+                .antMatchers("/login.html").permitAll()
+                .antMatchers("/register.html").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/home.html").permitAll()
+                .antMatchers("/admin.html").permitAll()
+                .antMatchers("/css/dashboard.css").permitAll()
+                .antMatchers("/company.html").permitAll()
+                .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
+                .anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(

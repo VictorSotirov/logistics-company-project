@@ -6,7 +6,9 @@ import java.util.Optional;
 
 public interface CompanyService
 {
-    //Might need to add/refactor the functions using the company name instead of id
+    //logic for deleting everything from db
+    void createCompany(CompanyDto companyToCreate);
+
     void updateCompany(Long companyId, CompanyDto companyDto);
 
     void deleteCompany(Long companyId);
