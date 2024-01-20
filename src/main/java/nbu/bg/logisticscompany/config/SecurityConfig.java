@@ -112,7 +112,7 @@ public class SecurityConfig {
                 .antMatchers("/login.html").permitAll()
                 .antMatchers("/register.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/home").permitAll()
+                .antMatchers("/home.html").permitAll()
                 .antMatchers("/admin.html").permitAll()
                 .antMatchers("/css/dashboard.css").permitAll()
                 .antMatchers("/company").permitAll()
