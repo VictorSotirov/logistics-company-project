@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company data</title>
+</head>
+
+<body>
+<div class="container">
+    <h2>Company Data</h2>
+
+    <div th:if="${company}">
+        <h3>Company Name: <span th:text="${company.name}"></span></h3>
+        <p>Company Address: <span th:text="${company.address}"></span></p>
+    </div>
+</div>
+</body>
+
+</html>

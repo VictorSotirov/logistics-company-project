@@ -1,15 +1,16 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.exceptions.CompanyAlreadyExistsException;
+import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -19,38 +20,84 @@ public class CompanyController
     private final CompanyService companyService;
 
     @GetMapping("/company")
-    public ResponseEntity<CompanyDto> getCompanyData()
+    public String showCompanyData(Model model)
     {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
-        return companyDtoOptional
-                .map(companyDto -> new ResponseEntity<>(companyDto, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
+
+        return "company";
     }
 
-    @GetMapping("/edit")
-    public String editCompanyData(Model model)
+    @GetMapping("/company/edit")
+    public String showCompanyEditForm(Model model)
     {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
         if (companyDtoOptional.isPresent())
         {
-            model.addAttribute("company", companyDtoOptional.get());
+            CompanyDto companyDto = new CompanyDto();
 
-            return "editCompany";
+            companyDto.setId(companyDtoOptional.get().getId());
+
+            model.addAttribute("company", companyDto);
         }
-        else
-        {
-            return "redirect:/";
-        }
+
+        return "edit-company";
     }
 
-    //TODO
-    @PostMapping("/edit")
-    public String updateCompanyData(@RequestParam Long companyId, @ModelAttribute CompanyDto companyDto)
+    @PutMapping("/company/edit")
+    public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
     {
-        companyService.updateCompany(companyId, companyDto);
+        if (result.hasErrors())
+        {
+            return "edit-company";
+        }
 
-        return "redirect:/company/edit";
+        try
+        {
+            companyService.updateCompany(companyDto.getId(), companyDto);
+
+            return "redirect:/company";
+        }
+        catch (IllegalArgumentException | CompanyNotFoundException e)
+        {
+            result.rejectValue("id", null, e.getMessage());
+
+            return "edit-company";
+        }
     }
+
+    @GetMapping("/company/create")
+    public String showCompanyCreateForm(Model model)
+    {
+        model.addAttribute("company", new CompanyDto());
+
+        return "create-company";
+    }
+
+    @PostMapping("/company/create")
+    public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
+    {
+        if (result.hasErrors())
+        {
+            return "create-company";
+        }
+
+        try
+        {
+            companyService.createCompany(companyDto);
+
+            return "redirect:/company";
+        }
+        catch (CompanyAlreadyExistsException e)
+        {
+            // Handle company already exists exception
+            result.rejectValue("name", "error.company", e.getMessage());
+
+            return "create-company";
+        }
+    }
+
+
 }

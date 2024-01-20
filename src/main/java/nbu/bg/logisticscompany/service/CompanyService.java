@@ -1,13 +1,13 @@
 package nbu.bg.logisticscompany.service;
 
+import nbu.bg.logisticscompany.exceptions.CompanyAlreadyExistsException;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 
 import java.util.Optional;
 
 public interface CompanyService
 {
-    //logic for deleting everything from db
-    void createCompany(CompanyDto companyToCreate);
+    void createCompany(CompanyDto companyToCreate) throws CompanyAlreadyExistsException;
 
     void updateCompany(Long companyId, CompanyDto companyDto);
 
