@@ -6,6 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company data</title>
+
+    <!-- Add a confirmation script -->
+    <script th:inline="javascript">
+        function confirmDelete() {
+            var result = confirm("WARNING: This action will delete the whole database. Are you sure?");
+            if (result) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -15,6 +25,21 @@
     <div th:if="${company}">
         <h3>Company Name: <span th:text="${company.name}"></span></h3>
         <p>Company Address: <span th:text="${company.address}"></span></p>
+
+        <!-- Button to redirect to /company/edit -->
+        <a th:href="@{/company/edit(id=${company.id})}">
+            <button>Edit Company</button>
+        </a>
+
+        <!-- Button to redirect to /company/create -->
+        <a th:href="@{/company/create}">
+            <button>Create Company</button>
+        </a>
+
+        <!-- Form to trigger delete with confirmation -->
+        <form id="deleteForm" th:action="@{/company/delete}" method="post" style="display: none;">
+        </form>
+        <button onclick="confirmDelete()">Delete Company (with confirmation)</button>
     </div>
 </div>
 </body>

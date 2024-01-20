@@ -58,7 +58,7 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public Optional<CompanyDto> getCompanyData()
     {
-        Optional<Company> companyOptional = companyRepository.findById(1L);
+        Optional<Company> companyOptional = companyRepository.findFirstCompany();
 
         return companyOptional.map(company ->
                 CompanyDto.builder()
@@ -71,9 +71,11 @@ public class CompanyServiceImpl implements CompanyService
     //WARNING: THIS DELETES ALL RECORDS OF ALL TABLES
     @Override
     @Transactional
-    public void deleteCompany(Long companyId) throws CompanyNotFoundException
+    public void deleteCompany() throws CompanyNotFoundException
     {
-        if (companyId == null || companyRepository.findById(companyId).isEmpty())
+        Optional<Company> company = companyRepository.findFirstCompany();
+
+        if (company.isEmpty())
         {
             throw new CompanyNotFoundException("Invalid company");
         }

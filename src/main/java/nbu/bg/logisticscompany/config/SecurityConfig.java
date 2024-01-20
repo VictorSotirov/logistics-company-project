@@ -112,12 +112,13 @@ public class SecurityConfig {
                 .antMatchers("/login.html").permitAll()
                 .antMatchers("/register.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/home.html").permitAll()
+                .antMatchers("/home").permitAll()
                 .antMatchers("/admin.html").permitAll()
                 .antMatchers("/css/dashboard.css").permitAll()
                 .antMatchers("/company").permitAll()
                 .antMatchers("/company/edit").permitAll()
                 .antMatchers("/company/create").permitAll()
+                .antMatchers("/company/delete").permitAll()
                 .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 

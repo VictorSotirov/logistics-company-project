@@ -11,7 +11,7 @@ public interface CompanyService
 
     void updateCompany(Long companyId, CompanyDto companyDto);
 
-    void deleteCompany(Long companyId);
+    void deleteCompany();
 
     Optional<CompanyDto> getCompanyData();
 }
