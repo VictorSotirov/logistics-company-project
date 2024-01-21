@@ -1,20 +1,20 @@
 package nbu.bg.logisticscompany.service;
 
-import nbu.bg.logisticscompany.model.entity.Office;
+import nbu.bg.logisticscompany.model.dto.OfficeDto;
 
 import java.util.List;
 
 public interface OfficeService {
 
-    List<Office> getAllOffices();
+    List<OfficeDto> getAllOffices();
 
-    List<Office> getOfficesByCompanyId(Long companyId);
+    List<OfficeDto> getOfficesByCompanyId(Long companyId);
 
-    void addOffice(Office office);
+    void addOffice(OfficeDto office);
 
-    Office getOfficeById(Long id);
+    OfficeDto getOfficeById(Long id);
 
-    void updateOffice(Long id, Office updateOffice);
+    void updateOffice(Long id, OfficeDto updateOffice);
 
     void deleteOffice(Long id);
 }

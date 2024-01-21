@@ -17,8 +17,11 @@ import javax.persistence.*;
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @Column(name = "ID")
     private Long id;
 
+    @Column(name = "address", unique = true, nullable = false)
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY,
