@@ -14,4 +14,6 @@ public interface CompanyService
     void deleteCompany();
 
     Optional<CompanyDto> getCompanyData();
+
+    public boolean dbHasCompany();
 }

@@ -13,10 +13,10 @@ public class CompanyDto
 {
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Name cannot be blank.")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Address cannot be blank.")
     private String address;
 
     @Override

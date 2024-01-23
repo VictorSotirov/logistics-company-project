@@ -35,6 +35,11 @@ public class CompanyController
     @GetMapping("/company/edit")
     public String showCompanyEditForm(Model model)
     {
+        if (!companyService.dbHasCompany())
+        {
+            return "redirect:/company";
+        }
+
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
         if (companyDtoOptional.isPresent())
@@ -53,6 +58,11 @@ public class CompanyController
     @PutMapping("/company/edit")
     public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
     {
+        if (!companyService.dbHasCompany())
+        {
+            return "redirect:/company";
+        }
+
         if (result.hasErrors())
         {
             return "edit-company";
@@ -73,9 +83,15 @@ public class CompanyController
     }
 
     //GET COMPANY CREATE FORM
+    //CHECK IF THERE IS A COMPANY IN THE DB
     @GetMapping("/company/create")
     public String showCompanyCreateForm(Model model)
     {
+        if (companyService.dbHasCompany())
+        {
+            return "redirect:/company";
+        }
+
         model.addAttribute("company", new CompanyDto());
 
         return "create-company";
@@ -85,6 +101,11 @@ public class CompanyController
     @PostMapping("/company/create")
     public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
     {
+        if (companyService.dbHasCompany())
+        {
+            return "redirect:/company";
+        }
+
         if (result.hasErrors())
         {
             return "create-company";
@@ -105,9 +126,16 @@ public class CompanyController
         }
     }
 
+    //DELETE ENTIRE DB
+    //Handle redirecting if method is called with get
     @PostMapping("/company/delete")
     public String deleteCompany(RedirectAttributes redirectAttributes )
     {
+        if (!companyService.dbHasCompany())
+        {
+            return "redirect:/company";
+        }
+
         try
         {
             companyService.deleteCompany();
@@ -120,6 +148,6 @@ public class CompanyController
         }
 
         //ADD ADEQUATE REDIRECT
-        return "redirect:/home";
+        return "redirect:/company";
     }
 }

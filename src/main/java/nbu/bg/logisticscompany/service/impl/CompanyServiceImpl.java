@@ -24,10 +24,9 @@ public class CompanyServiceImpl implements CompanyService
     @Override
     public void createCompany(CompanyDto companyToCreate) throws CompanyAlreadyExistsException
     {
-        if(companyRepository.existsByName(companyToCreate.getName()))
+        if(companyRepository.count() > 0)
         {
-            throw new CompanyAlreadyExistsException("Company with name"
-                    + companyToCreate.getName() + " already exists.");
+            throw new CompanyAlreadyExistsException("A company already exists. Cannot create a second one.");
         }
 
         Company company = Company.builder()
@@ -87,5 +86,11 @@ public class CompanyServiceImpl implements CompanyService
         entityManager.createNativeQuery("DELETE FROM Orders").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Staff").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Client").executeUpdate();
+    }
+
+    @Override
+    public boolean dbHasCompany()
+    {
+        return companyRepository.count() > 0;
     }
 }
