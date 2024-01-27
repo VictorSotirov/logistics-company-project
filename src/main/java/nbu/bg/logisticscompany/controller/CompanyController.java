@@ -127,7 +127,6 @@ public class CompanyController
     }
 
     //DELETE ENTIRE DB
-    //Handle redirecting if method is called with get
     @PostMapping("/company/delete")
     public String deleteCompany(RedirectAttributes redirectAttributes )
     {
@@ -147,7 +146,13 @@ public class CompanyController
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        //ADD ADEQUATE REDIRECT
         return "redirect:/company";
+    }
+
+    //REDIRECT IF DELETE IS TRIED TO BE ACCESSED USING GET
+    @GetMapping("/company/delete")
+    public String handleDeleteCompanyGet()
+    {
+        return "redirect:/index";
     }
 }

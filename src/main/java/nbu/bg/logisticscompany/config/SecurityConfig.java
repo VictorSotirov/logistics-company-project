@@ -109,8 +109,8 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/register").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 // Our public pages
-                .antMatchers("/login.html").permitAll()
-                .antMatchers("/register.html").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/home.html").permitAll()
                 .antMatchers("/admin.html").permitAll()

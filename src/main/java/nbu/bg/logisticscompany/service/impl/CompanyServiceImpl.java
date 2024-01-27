@@ -79,6 +79,7 @@ public class CompanyServiceImpl implements CompanyService
             throw new CompanyNotFoundException("Invalid company");
         }
 
+        //REFACTOR
         entityManager.createNativeQuery("DELETE FROM Office").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Company").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Role").executeUpdate();

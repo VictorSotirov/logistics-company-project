@@ -26,11 +26,8 @@
         <!-- Form to trigger delete with confirmation -->
 
         <form id="deleteForm" th:action="@{/company/delete}" method="post" onsubmit="return confirmDelete();">
-            <button type="submit" class="btn btn-primary">Delete Company</button>
+            <button type="submit" class="btn btn-danger">Delete Company</button>
         </form>
-
-        <!-- Button to redirect to /company/create -->
-
     </div>
 
     <th:block th:unless="${company}">
