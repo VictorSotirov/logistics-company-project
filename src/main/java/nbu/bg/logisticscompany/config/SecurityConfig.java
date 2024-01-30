@@ -119,6 +119,8 @@ public class SecurityConfig {
                 .antMatchers("/company/edit").permitAll()
                 .antMatchers("/company/create").permitAll()
                 .antMatchers("/company/delete").permitAll()
+                .antMatchers("/order").permitAll()
+                .antMatchers("/orders").permitAll()
                 .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 

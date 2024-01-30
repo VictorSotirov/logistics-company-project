@@ -67,7 +67,7 @@ public class CompanyServiceImpl implements CompanyService
                         .build());
     }
 
-    //WARNING: THIS DELETES ALL RECORDS OF ALL TABLES
+    //THIS DELETES ALL RECORDS OF ALL TABLES
     @Override
     @Transactional
     public void deleteCompany() throws CompanyNotFoundException
@@ -79,11 +79,9 @@ public class CompanyServiceImpl implements CompanyService
             throw new CompanyNotFoundException("Invalid company");
         }
 
-        //REFACTOR
-        entityManager.createNativeQuery("DELETE FROM Office").executeUpdate();
+        //ONLY THING LEFT FOR REFACTORING
+        //NEED TO REFACTOR BASED ON HOW USERS ARE HANDLED AND TO CHECK IF OFFICES ARE DELETED
         entityManager.createNativeQuery("DELETE FROM Company").executeUpdate();
-        entityManager.createNativeQuery("DELETE FROM Role").executeUpdate();
-        entityManager.createNativeQuery("DELETE FROM User").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Orders").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Staff").executeUpdate();
         entityManager.createNativeQuery("DELETE FROM Client").executeUpdate();

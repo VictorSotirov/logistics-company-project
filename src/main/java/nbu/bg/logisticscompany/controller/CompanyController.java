@@ -6,53 +6,17 @@ import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.service.CompanyService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 public class CompanyController
 {
     private final CompanyService companyService;
-
-    //GET COMPANY DATA PAGE
-    @GetMapping("/company")
-    public String showCompanyData(Model model)
-    {
-        Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
-
-        companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
-
-        return "company";
-    }
-
-    //GET COMPANY EDIT FORM
-    @GetMapping("/company/edit")
-    public String showCompanyEditForm(Model model)
-    {
-        if (!companyService.dbHasCompany())
-        {
-            return "redirect:/company";
-        }
-
-        Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
-
-        if (companyDtoOptional.isPresent())
-        {
-            CompanyDto companyDto = new CompanyDto();
-
-            companyDto.setId(companyDtoOptional.get().getId());
-
-            model.addAttribute("company", companyDto);
-        }
-
-        return "edit-company";
-    }
 
     //SEND DATA IN COMPANY EDIT FORM WITH PUT
     @PutMapping("/company/edit")
@@ -80,21 +44,6 @@ public class CompanyController
 
             return "edit-company";
         }
-    }
-
-    //GET COMPANY CREATE FORM
-    //CHECK IF THERE IS A COMPANY IN THE DB
-    @GetMapping("/company/create")
-    public String showCompanyCreateForm(Model model)
-    {
-        if (companyService.dbHasCompany())
-        {
-            return "redirect:/company";
-        }
-
-        model.addAttribute("company", new CompanyDto());
-
-        return "create-company";
     }
 
     //SEND DATA IN COMPANY CREATE FORM WITH POST
@@ -149,10 +98,4 @@ public class CompanyController
         return "redirect:/company";
     }
 
-    //REDIRECT IF DELETE IS TRIED TO BE ACCESSED USING GET
-    @GetMapping("/company/delete")
-    public String handleDeleteCompanyGet()
-    {
-        return "redirect:/index";
-    }
 }

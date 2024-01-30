@@ -1,5 +1,6 @@
 package nbu.bg.logisticscompany;
 
+import nbu.bg.logisticscompany.model.entity.Client;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Role;
 import nbu.bg.logisticscompany.model.entity.User;
