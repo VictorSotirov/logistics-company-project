@@ -98,6 +98,7 @@ public class PageController {
         return "create-company";
     }
 
+    //MIGHT NEED TO CHANGE REDIRECTING WHEN PAGE IS FIXED
     @GetMapping("/company/delete")
     public String handleDeleteCompanyGet()
     {
