@@ -109,12 +109,18 @@ public class SecurityConfig {
                 .antMatchers("/api/auth/register").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 // Our public pages
-                .antMatchers("/login.html").permitAll()
-                .antMatchers("/register.html").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/home.html").permitAll()
                 .antMatchers("/admin.html").permitAll()
                 .antMatchers("/css/dashboard.css").permitAll()
+                .antMatchers("/company").permitAll()
+                .antMatchers("/company/edit").permitAll()
+                .antMatchers("/company/create").permitAll()
+                .antMatchers("/company/delete").permitAll()
+                .antMatchers("/order").permitAll()
+                .antMatchers("/orders").permitAll()
                 .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 

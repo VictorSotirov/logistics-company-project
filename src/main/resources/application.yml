@@ -11,6 +11,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+    hiddenmethod:
+      filter:
+        enabled: true
 app:
   jwtSecret: s3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3t
   jwtExpirationMs: 1200000  # 20 minutes

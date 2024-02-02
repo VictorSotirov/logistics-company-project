@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,5 +19,14 @@ public class GlobalExceptionHandler {
         exception.printStackTrace();
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //Added exception handling for the Company
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public  ResponseEntity<Object> handleCompanyNotFound(final Exception exception)
+    {
+        exception.printStackTrace();
+
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

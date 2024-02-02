@@ -1,9 +1,6 @@
 package nbu.bg.logisticscompany.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +30,7 @@ public class Order {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_staff")
     private Staff staff;
+
     // TODO
     // private Staff courier;  (ManyToOne) with Staff
     // private Staff officeEmployee; (ManyToOne) with Staff

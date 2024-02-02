@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<body>
+<div layout:fragment="content" class="container">
+
+    <div class="" style="margin-top:200px">
+        <div class="rounded d-flex justify-content-center">
+            <div class="col-md-4 col-sm-12 shadow-lg p-5 bg-light">
+                <div class="text-center">
+                    <h3 class="text-primary">Create a profile</h3>
+                </div>
+                <div class="p-4">
+                    <form action="">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-primary"><i class="fa fa-user text-white"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" id="username">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-primary"><i class="fa fa-lock text-white"></i></span>
+                            <input type="password" class="form-control" placeholder="Password" id="password">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-primary"><i class="fa fa-lemon-o text-white"></i></span>
+                            <input type="password" class="form-control" placeholder="Confirm password"
+                                   id="matching-password">
+                        </div>
+                        <div class="d-grid col-12 mx-auto">
+                            <button class="btn btn-primary" type="button"><span></span> Register</button>
+                        </div>
+                        <p class="text-center mt-3">Already have a profile?
+                            <span class="text-primary" id="sign-in-button">Log in</span>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitRegisterForm() {
+            var username = document.querySelector('#username').value;
+            var password = document.querySelector('#password').value;
+            var matchingPassword = document.querySelector('#matching-password').value;
+            fetch('http://localhost:8080/api/auth/register', {
+                method: 'POST',
+                headers: new Headers({'content-type': 'application/json'}),
+                body: JSON.stringify(
+                    {
+                        "username": username,
+                        "password": password,
+                        "matchingPassword": matchingPassword
+                    }
+                )
+            }).then(function (response) {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Успех!',
+                        text: 'Success creating profile!',
+                        footer: '<a href="/login">Log in</a>'
+                    })
+                }
+            })
+        }
+
+        var submitBtn = document.querySelector('button');
+        submitBtn.addEventListener('click', submitRegisterForm);
+
+        var signInButton = document.querySelector("#sign-in-button");
+        signInButton.addEventListener('mouseenter', () => signInButton.classList.add('border', 'border-primary'))
+        signInButton.addEventListener('mouseleave', () => signInButton.classList.remove('border', 'border-primary'))
+
+        signInButton.addEventListener('click', () => window.location.replace("/login"));
+    </script>
+</div>
+</body>
+</html>

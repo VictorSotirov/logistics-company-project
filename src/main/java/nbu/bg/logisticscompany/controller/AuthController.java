@@ -27,8 +27,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegisterDto userRegisterDto) {
-        if (userService.register(userRegisterDto)){
-           return ResponseEntity.ok("User registered successfully!");
+        if (userService.register(userRegisterDto)) {
+            return ResponseEntity.ok("User registered successfully!");
         }
         return new ResponseEntity<>("User couldn't be registered successfully!", HttpStatus.INTERNAL_SERVER_ERROR);
     }
