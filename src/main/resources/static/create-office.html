@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<body>
+<div layout:fragment="content" class="container">
+    <div class="py-5 text-center">
+        <h2>Create an Office</h2>
+        <p class="lead">Thank you for choosing our logistics company. Use the form below to create a new office:</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+
+            <h4 class="mb-3">Office details</h4>
+
+            <form th:action="@{/office}" th:object="${officeDto}" method="post">
+
+                <div class="mb-3">
+                    <label for="address">Office Address</label>
+                    <input type="text" th:field="*{address}" class="form-control" id="address"
+                           placeholder="1234 Main St" required>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="companyId">Company ID</label>
+                    <input type="number" th:field="*{companyId}" class="form-control" id="companyId" required>
+                    <div class="invalid-feedback">
+                        <span th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}"></span>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Create Office</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
