@@ -54,8 +54,7 @@ public class PageController {
 
 
     @GetMapping("/company")
-    public String showCompanyData(Model model)
-    {
+    public String showCompanyData(Model model) {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
         companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
@@ -64,17 +63,14 @@ public class PageController {
     }
 
     @GetMapping("/company/edit")
-    public String showCompanyEditForm(Model model)
-    {
-        if (!companyService.dbHasCompany())
-        {
+    public String showCompanyEditForm(Model model) {
+        if (!companyService.dbHasCompany()) {
             return "redirect:/company";
         }
 
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
-        if (companyDtoOptional.isPresent())
-        {
+        if (companyDtoOptional.isPresent()) {
             CompanyDto companyDto = new CompanyDto();
 
             companyDto.setId(companyDtoOptional.get().getId());
@@ -86,10 +82,8 @@ public class PageController {
     }
 
     @GetMapping("/company/create")
-    public String showCompanyCreateForm(Model model)
-    {
-        if (companyService.dbHasCompany())
-        {
+    public String showCompanyCreateForm(Model model) {
+        if (companyService.dbHasCompany()) {
             return "redirect:/company";
         }
 
@@ -100,8 +94,12 @@ public class PageController {
 
     //MIGHT NEED TO CHANGE REDIRECTING WHEN PAGE IS FIXED
     @GetMapping("/company/delete")
-    public String handleDeleteCompanyGet()
-    {
+    public String handleDeleteCompanyGet() {
         return "redirect:/index";
+    }
+
+    @GetMapping("/client")
+    public String showClientOrders(Model model) {
+        return "client-orders";
     }
 }
