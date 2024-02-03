@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+//MIGHT NEED TO MOVE TO GLOBAL EXCEPTION HANDLER
 @ControllerAdvice
 @AllArgsConstructor
 public class GlobalControllerAdvice
