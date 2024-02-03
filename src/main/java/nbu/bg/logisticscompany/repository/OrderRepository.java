@@ -16,5 +16,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> getAllOrdersBySenderId(@Param("senderId") Long senderId);
 
     @Query("SELECT order FROM Order order WHERE order.receiver.id = :receiverId")
-    List<Order> getAllOrdersByReceiverId(@Param("receiverId") Long senderId);
+    List<Order> getAllOrdersByReceiverId(@Param("receiverId") Long receiverId);
 }
