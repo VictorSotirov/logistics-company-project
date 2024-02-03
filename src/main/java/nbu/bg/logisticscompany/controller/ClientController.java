@@ -1,36 +1,49 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
+import nbu.bg.logisticscompany.model.entity.User;
+import nbu.bg.logisticscompany.repository.UserRepository;
 import nbu.bg.logisticscompany.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/client")
 public class ClientController {
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private UserRepository userRepository;
 
-    @GetMapping("/recieved{id}")
-    public ResponseEntity<List<OrderDto>> getRecievedOrders(@NonNull Long id) {
-        List<OrderDto> receivedOrders = clientService.getReceivedOrders(id);
+    @GetMapping("/client/received")
+    public String getReceivedOrders(Authentication authentication, Model model) {
+        if (authentication == null) {
+            throw new RuntimeException();
+        }
+        Optional<User> foundUser = userRepository.findByUsername(authentication.getName());
+        List<OrderDto> receivedOrders = clientService.getReceivedOrders(
+                foundUser.orElseThrow(RuntimeException::new).getId());
         System.out.println(receivedOrders);
-        return new ResponseEntity<>(receivedOrders, HttpStatus.OK);
+        model.addAttribute("receivedOrders", receivedOrders);
+        return "received-orders";
     }
 
-    @GetMapping("/sent{id}")
-    public ResponseEntity<List<OrderDto>> getSentOrders(@NonNull Long id) {
-        List<OrderDto> sentOrders = clientService.getSentOrders(id);
+    @GetMapping("/client/sent")
+    public String getSentOrders(Authentication authentication, Model model) {
+        if (authentication == null) {
+            throw new RuntimeException();
+        }
+        Optional<User> foundUser = userRepository.findByUsername(authentication.getName());
+        List<OrderDto> sentOrders = clientService.getSentOrders(foundUser.orElseThrow(RuntimeException::new).getId());
         System.out.println(sentOrders);
-        return new ResponseEntity<>(sentOrders, HttpStatus.OK);
+        model.addAttribute("sentOrders", sentOrders);
+        return "sent-orders";
     }
 }
