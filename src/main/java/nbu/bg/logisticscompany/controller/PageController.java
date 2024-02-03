@@ -46,4 +46,9 @@ public class PageController {
         model.addAttribute("orders", orderDtoList);
         return "orders";
     }
+
+    @GetMapping("/client")
+    public String showClientOrders(Model model) {
+        return "client-orders";
+    }
 }
