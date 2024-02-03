@@ -9,15 +9,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRegistration.class)
-    public ResponseEntity<Object> handleInvalidRegistration(final Exception exception){
+    public ResponseEntity<Object> handleInvalidRegistration(final Exception exception) {
         exception.printStackTrace();
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleAll(final Exception exception){
+    public String handleAll(final Exception exception) {
         exception.printStackTrace();
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return "redirect:/";
     }
 }
