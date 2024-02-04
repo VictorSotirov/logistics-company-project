@@ -3,13 +3,17 @@ package nbu.bg.logisticscompany.controller;
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
+import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 import nbu.bg.logisticscompany.service.CompanyService;
 import nbu.bg.logisticscompany.service.OrderService;
+import nbu.bg.logisticscompany.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,17 +21,43 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PageController {
     private final OrderService orderService;
-
+    private final UserService userService;
     private final CompanyService companyService;
+
+    @RequestMapping({"/index", "/"})
+    public String index() {
+        return "index";
+    }
 
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
     }
 
+    @RequestMapping("/login-error.html")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+
     @GetMapping("/register")
-    public String showRegisterPage() {
+    public String showRegistrationForm() {
         return "register";
+    }
+
+    @PostMapping("/register")
+    public ModelAndView registerUserAccount(
+            @ModelAttribute("user") @Valid UserRegisterDto userDto,
+            HttpServletRequest request) {
+
+        try {
+            boolean register = userService.registerClient(userDto);
+        } catch (Exception ex) {
+            ModelAndView mav = new ModelAndView("register", "user", userDto);
+            mav.addObject("message", ex.getMessage());
+            return mav;
+        }
+        return new ModelAndView("login", "user", userDto);
     }
 
     @GetMapping("/order")

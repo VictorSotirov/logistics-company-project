@@ -1,6 +1,5 @@
 package nbu.bg.logisticscompany;
 
-import nbu.bg.logisticscompany.model.entity.Client;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Role;
 import nbu.bg.logisticscompany.model.entity.User;
@@ -19,14 +18,12 @@ import java.util.List;
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    //Added initial company record
     private final CompanyRepository companyRepository;
     boolean alreadySetup = false;
 
     public SetupDataLoader(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
-                           CompanyRepository companyRepository)
-    {
+                           CompanyRepository companyRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
@@ -34,13 +31,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (alreadySetup)
-        {
+        if (alreadySetup) {
             return;
         }
 
         Company company = Company.builder()
-                .name("Speedy")
+                .name("UPS")
                 .address("Ralevica 64")
                 .build();
 

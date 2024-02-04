@@ -5,7 +5,6 @@ import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.entity.User;
 import nbu.bg.logisticscompany.repository.UserRepository;
 import nbu.bg.logisticscompany.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +16,8 @@ import java.util.Optional;
 @Controller
 @AllArgsConstructor
 public class ClientController {
-    @Autowired
     private ClientService clientService;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/client/received")
     public String getReceivedOrders(Authentication authentication, Model model) {

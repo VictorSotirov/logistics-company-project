@@ -68,18 +68,6 @@
             </div>
         </div>
     </div>
-    <script>
-        if (localStorage.getItem("user") === null) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Please log in!',
-                footer: '<a href="/login">Log in</a>'
-            });
-            window.location.replace("/login")
-        }
-    </script>
-
 </div>
 </body>
 </html>
