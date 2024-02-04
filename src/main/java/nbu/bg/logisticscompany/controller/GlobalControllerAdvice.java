@@ -13,6 +13,7 @@ public class GlobalControllerAdvice
 {
     private final CompanyService companyService;
 
+    //DYNAMICALLY ADDS THE COMPANY NAME TO THE HEADER, FOOTER, AND INDEX PAGE
     @ModelAttribute
     public void addAttributes(Model model)
     {

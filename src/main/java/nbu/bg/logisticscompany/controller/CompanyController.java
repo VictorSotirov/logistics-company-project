@@ -18,7 +18,7 @@ public class CompanyController
 {
     private final CompanyService companyService;
 
-    //SEND DATA IN COMPANY EDIT FORM WITH PUT
+    //SEND DATA TO CHANGE IN COMPANY EDIT FORM WITH PUT
     @PutMapping("/company/edit")
     public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
     {
@@ -75,7 +75,7 @@ public class CompanyController
         }
     }
 
-    //DELETE ENTIRE DB
+    //DELETE ENTIRE DB SINCE THERE IS ONLY ONE COMPANY IN THE DATABASE
     @PostMapping("/company/delete")
     public String deleteCompany(RedirectAttributes redirectAttributes )
     {
