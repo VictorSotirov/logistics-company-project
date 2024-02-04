@@ -28,14 +28,14 @@ public class GlobalExceptionHandler
     public String handleCompanyNotFound(final Exception exception) {
         exception.printStackTrace();
 
-        return "redirect:/";
+        return "redirect:/company";
     }
 
     @ExceptionHandler(CompanyAlreadyExistsException.class)
-    public ResponseEntity<Object> handleCompanyAlreadyExists(final Exception exception)
+    public String handleCompanyAlreadyExists(final Exception exception)
     {
         exception.printStackTrace();
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return "redirect:/company/create";
     }
 }
