@@ -1,6 +1,10 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.annotation.security.isAdmin;
+import nbu.bg.logisticscompany.annotation.security.isClient;
+import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
+import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
@@ -55,12 +59,14 @@ public class PageController {
     }
 
     @GetMapping("/order")
+    @isOfficeEmployee
     public String showOrderPage(Model model) {
         model.addAttribute("order", new OrderDto());
         return "create-order";
     }
 
     @GetMapping("/order/{id}")
+    @isStaff
     public String showUpdateOrder(@PathVariable("id") String id, Model model) throws Exception {
         //TODO validate ID
         OrderDto order = orderService.getOrderByID(Long.parseLong(id));
@@ -69,6 +75,7 @@ public class PageController {
     }
 
     @GetMapping("/orders")
+    @isStaff
     public String showOrdersList(Model model) {
         // TODO return orders based on user role and context
         List<OrderDto> orderDtoList = orderService.getAllOrders();
@@ -78,6 +85,7 @@ public class PageController {
 
 
     @GetMapping("/company")
+    @isAdmin
     public String showCompanyData(Model model) {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
@@ -87,6 +95,7 @@ public class PageController {
     }
 
     @GetMapping("/company/edit")
+    @isAdmin
     public String showCompanyEditForm(Model model) {
         if (!companyService.dbHasCompany()) {
             return "redirect:/company";
@@ -106,6 +115,7 @@ public class PageController {
     }
 
     @GetMapping("/company/create")
+    @isAdmin
     public String showCompanyCreateForm(Model model) {
         if (companyService.dbHasCompany()) {
             return "redirect:/company";
@@ -118,11 +128,13 @@ public class PageController {
 
     //MIGHT NEED TO CHANGE REDIRECTING WHEN PAGE IS FIXED
     @GetMapping("/company/delete")
+    @isAdmin
     public String handleDeleteCompanyGet() {
         return "redirect:/index";
     }
 
     @GetMapping("/client")
+    @isClient
     public String showClientOrders(Model model) {
         return "client-orders";
     }
