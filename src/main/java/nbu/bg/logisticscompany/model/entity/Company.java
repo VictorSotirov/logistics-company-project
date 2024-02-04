@@ -22,10 +22,10 @@ public class Company
     private Long id;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 50)
     private String name;
 
-    @Size(max = 30)
+    @Size(max = 50)
     private String address;
 
     @OneToMany(mappedBy = "company",
