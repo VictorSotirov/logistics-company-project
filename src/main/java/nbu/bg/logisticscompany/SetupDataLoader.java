@@ -36,7 +36,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         }
 
         Company company = Company.builder()
-                .name("UPS")
+                .name("Speedy")
                 .address("Ralevica 64")
                 .build();
 

@@ -3,11 +3,12 @@
         <h5 class="my-0 mr-md-auto font-weight-normal" th:if="${companyName}"><a href="/" th:text="${companyName}"></a>
         </h5>
         <nav class="my-2 my-md-0 mr-md-3 ml-auto">
-            <a class="p-2 text-dark" href="/">Home</a>
-            <a class="p-2 text-dark" href="/">Pricing</a>
-            <a class="p-2 text-dark" href="/orders">Orders</a>
-            <a class="p-2 text-dark" href="/client">My Orders</a>
-            <a class="btn btn-outline-primary" href="/order">Create order</a>
+            <a class="p-2 text-dark" href="/index">Home</a>
+            <!--                TODO: my orders - clients-->
+            <!--                Orders - staff-->
+            <a class="p-2 text-dark" href="/orders" sec:authorize="isAuthenticated()">Orders</a>
+            <a class="p-2 text-dark" href="/client" sec:authorize="isAuthenticated()">My Orders</a>
+            <a class="btn btn-outline-primary" href="/order" sec:authorize="isAuthenticated()">Create order</a>
         </nav>
         <div sec:authorize="!isAuthenticated()">
             <a class="btn btn-outline-primary" href="/login">Sign in</a>

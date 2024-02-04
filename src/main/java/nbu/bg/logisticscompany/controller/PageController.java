@@ -24,7 +24,7 @@ public class PageController {
     private final UserService userService;
     private final CompanyService companyService;
 
-    @RequestMapping({"/index", "/"})
+    @RequestMapping({"/index", "/", "/home"})
     public String index() {
         return "index";
     }

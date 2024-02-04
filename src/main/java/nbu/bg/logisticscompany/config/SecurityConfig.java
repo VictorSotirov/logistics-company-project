@@ -35,6 +35,7 @@ public class SecurityConfig {
         http.userDetailsService(userDetailsService)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .antMatchers("/register").permitAll()
+                        .antMatchers("/index").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login").permitAll()
