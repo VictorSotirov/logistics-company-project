@@ -25,28 +25,27 @@ project</h3>
 - Springboot
 - Java 11
 - Hibernate
-- HTML, CSS, JavaScript
+- HTML, CSS, JavaScript, Thymeleaf
 - Maven
 
 ## Getting Started
 
 How to run the project:
+
 1. Navigate to the root of the source code
 2. Run the following maven command:
    `mvn clean install
    `
-
    *Note: Make sure Java 11 is installed and in the PATH variable*
 
 Alternatively, clone the repository and import in your IDE
 
 ### Creating A Pull Request
 
-
-
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/dannypopov/logistics-company-project/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License.
+See [LICENSE](https://github.com/dannypopov/logistics-company-project/blob/main/LICENSE.md) for more information.
 
 ## Authors
 

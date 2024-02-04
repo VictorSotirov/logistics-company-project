@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.model.entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,14 +9,14 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-//@MappedSuperclass
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Builder
+@Inheritance(strategy = InheritanceType.JOINED)
+@SuperBuilder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
