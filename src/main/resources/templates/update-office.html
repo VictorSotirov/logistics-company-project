@@ -12,7 +12,7 @@
 
             <h4 class="mb-3">Office details</h4>
 
-            <form th:action="@{/office}" th:method="put" th:object="${officeDto}" th:action="@{'/office/' + ${officeDto.id}}">
+            <form th:method="PUT" th:object="${office}" th:action="@{'/office/update/' + ${office.id}}">
 
                 <hr class="mb-4">
 
@@ -20,7 +20,7 @@
                     <h5 class="d-flex mb-3">
                         <span class="text-muted">Office ID is:&nbsp;&nbsp;&nbsp;</span>
                         <span class="badge badge-secondary padding-right: 0.6em; padding-left: 0.6em;"><div
-                                class="margin-bottom: .0rem !important" th:text=" ${officeDto.id} "></div></span>
+                                class="margin-bottom: .0rem !important" th:text=" ${office.id} "></div></span>
                     </h5>
                 </div>
 

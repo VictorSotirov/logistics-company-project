@@ -16,7 +16,7 @@ public class OfficeDto {
     private Long id;
     @NotBlank(message = "Address cannot be blank")
     private String address;
-    @NotNull(message = "CompanyId cannot be null")
+    @NotNull(message = "Company Id cannot be null")
     private Long companyId;
 
     @Override

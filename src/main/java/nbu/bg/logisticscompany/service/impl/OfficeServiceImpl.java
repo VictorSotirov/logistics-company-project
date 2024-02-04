@@ -2,8 +2,10 @@ package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
 import  lombok.NoArgsConstructor;
+import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Office;
 import nbu.bg.logisticscompany.model.dto.OfficeDto;
+import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.repository.OfficeRepository;
 import nbu.bg.logisticscompany.service.OfficeService;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeRepository officeRepository;
+    private final CompanyRepository companyRepository;
 
 
     @Override
@@ -52,6 +55,9 @@ public class OfficeServiceImpl implements OfficeService {
         Optional<Office> officeOptional = officeRepository.findById(id);
         officeOptional.ifPresent(office -> {
             office.setAddress(updatedOfficeDto.getAddress());
+            Company company = companyRepository.getReferenceById(updatedOfficeDto.getCompanyId());
+
+            office.setCompany(company);
             officeRepository.save(office);
         });
     }
@@ -65,6 +71,11 @@ public class OfficeServiceImpl implements OfficeService {
         OfficeDto officeDto = new OfficeDto();
         officeDto.setAddress(office.getAddress());
         officeDto.setId(office.getId());
+
+        Company company = companyRepository.getReferenceById(office.getCompany().getId());
+
+        officeDto.setCompanyId(company.getId());
+        System.out.println(officeDto);
         return officeDto;
     }
 
@@ -72,6 +83,10 @@ public class OfficeServiceImpl implements OfficeService {
         Office office = new Office();
         office.setAddress(officeDto.getAddress());
         office.setId(officeDto.getId());
+
+        Company company = companyRepository.getReferenceById(officeDto.getCompanyId());
+
+        office.setCompany(company);
         return office;
     }
 

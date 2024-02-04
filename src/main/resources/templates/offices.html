@@ -31,7 +31,7 @@
               <form th:method="get" th:action="@{'/office/update/' + ${office.id}}">
                 <button type="submit" class="btn btn-success"><i class="fa fa-edit"></i></button>
               </form>
-              <form th:method="delete" th:action="@{'/office/delete/' + ${office.id}}">
+              <form th:method="DELETE" th:action="@{'/office/delete/' + ${office.id}}">
                 <button type="submit" class="btn btn-danger" onclick="confirm('Are you sure?')">
                   <i class="fa fa-trash"></i>
                 </button>

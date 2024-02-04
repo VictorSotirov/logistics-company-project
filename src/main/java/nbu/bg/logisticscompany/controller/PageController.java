@@ -2,9 +2,11 @@ package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
+import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.service.CompanyService;
 import nbu.bg.logisticscompany.service.OrderService;
+import nbu.bg.logisticscompany.service.OfficeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ public class PageController {
     private final OrderService orderService;
 
     private final CompanyService companyService;
+
+    private final OfficeService officeService;
 
     @GetMapping("/login")
     public String showLoginPage() {
@@ -54,8 +58,7 @@ public class PageController {
 
 
     @GetMapping("/company")
-    public String showCompanyData(Model model)
-    {
+    public String showCompanyData(Model model) {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
         companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
@@ -64,17 +67,14 @@ public class PageController {
     }
 
     @GetMapping("/company/edit")
-    public String showCompanyEditForm(Model model)
-    {
-        if (!companyService.dbHasCompany())
-        {
+    public String showCompanyEditForm(Model model) {
+        if (!companyService.dbHasCompany()) {
             return "redirect:/company";
         }
 
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
 
-        if (companyDtoOptional.isPresent())
-        {
+        if (companyDtoOptional.isPresent()) {
             CompanyDto companyDto = new CompanyDto();
 
             companyDto.setId(companyDtoOptional.get().getId());
@@ -86,10 +86,8 @@ public class PageController {
     }
 
     @GetMapping("/company/create")
-    public String showCompanyCreateForm(Model model)
-    {
-        if (companyService.dbHasCompany())
-        {
+    public String showCompanyCreateForm(Model model) {
+        if (companyService.dbHasCompany()) {
             return "redirect:/company";
         }
 
@@ -100,8 +98,45 @@ public class PageController {
 
     //MIGHT NEED TO CHANGE REDIRECTING WHEN PAGE IS FIXED
     @GetMapping("/company/delete")
-    public String handleDeleteCompanyGet()
-    {
+    public String handleDeleteCompanyGet() {
         return "redirect:/index";
     }
+
+    @GetMapping("/offices")
+    public String showOfficesList(Model model) {
+
+        List<OfficeDto> officeDtoList = officeService.getAllOffices();
+        model.addAttribute("offices", officeDtoList);
+        return "offices";
+    }
+
+    @GetMapping("/office")
+    public String showOfficePage(Model model) {
+        model.addAttribute("office", new OfficeDto());
+        return "create-office";
+    }
+
+    @GetMapping("/office/update/{id}")
+    public String showUpdateOffice(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long officeId = Long.parseLong(id);
+            OfficeDto office = officeService.getOfficeById(officeId);
+
+            if (office == null) {
+                return "offices";
+            }
+            model.addAttribute("office", office);
+        } catch (NumberFormatException e) {
+            return "offices";
+        }
+        return "update-office";
+    }
+
+    @GetMapping("/office/delete/{id}")
+    public String deleteOffice()
+    {
+        return "redirect:/offices";
+    }
+
 }

@@ -121,6 +121,10 @@ public class SecurityConfig {
                 .antMatchers("/company/delete").permitAll()
                 .antMatchers("/order").permitAll()
                 .antMatchers("/orders").permitAll()
+                .antMatchers("/office").permitAll()
+                .antMatchers("/offices").permitAll()
+                .antMatchers("/office/delete/{id}").permitAll()
+                .antMatchers("/office/update/{id}").permitAll()
                 .antMatchers(SWAGGER_AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 

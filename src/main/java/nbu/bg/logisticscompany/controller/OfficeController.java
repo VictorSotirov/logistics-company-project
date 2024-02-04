@@ -25,7 +25,7 @@ public class OfficeController {
         return "redirect:/offices";
     }
 
-    @PutMapping("/office/{id}")
+    @PutMapping("/office/update/{id}")
     public String updateOffice(@PathVariable("id") Long id,
                                @Valid @ModelAttribute OfficeDto updatedOfficeDto,
                                BindingResult result, Model model) {
@@ -36,7 +36,7 @@ public class OfficeController {
         return "redirect:/offices";
     }
 
-    @DeleteMapping("/office/{id}")
+    @DeleteMapping("/office/delete/{id}")
     public String deleteOffice(@PathVariable("id") Long id) {
         officeService.deleteOffice(id);
         return "redirect:/offices";
