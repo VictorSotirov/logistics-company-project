@@ -6,7 +6,7 @@ spring:
     show-sql: true
     database-platform: org.sqlite.hibernate.dialect.SQLiteDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
   # fix for Swagger-ui path matching
   mvc:
     pathmatch:
@@ -14,6 +14,3 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-app:
-  jwtSecret: s3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3tTs3cr3t
-  jwtExpirationMs: 1200000  # 20 minutes

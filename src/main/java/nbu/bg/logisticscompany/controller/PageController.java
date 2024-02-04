@@ -34,12 +34,6 @@ public class PageController {
         return "login";
     }
 
-    @RequestMapping("/login-error.html")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
-
     @GetMapping("/register")
     public String showRegistrationForm() {
         return "register";
@@ -51,10 +45,10 @@ public class PageController {
             HttpServletRequest request) {
 
         try {
-            boolean register = userService.registerClient(userDto);
+            userService.registerClient(userDto);
         } catch (Exception ex) {
             ModelAndView mav = new ModelAndView("register", "user", userDto);
-            mav.addObject("message", ex.getMessage());
+            mav.addObject("errorMessage", ex.getMessage());
             return mav;
         }
         return new ModelAndView("login", "user", userDto);
