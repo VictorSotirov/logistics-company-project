@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.entity.User;
 import nbu.bg.logisticscompany.repository.UserRepository;
@@ -20,6 +21,7 @@ public class ClientController {
     private final UserRepository userRepository;
 
     @GetMapping("/client/received")
+    @isClient
     public String getReceivedOrders(Authentication authentication, Model model) {
         if (authentication == null) {
             throw new RuntimeException();
@@ -33,6 +35,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/sent")
+    @isClient
     public String getSentOrders(Authentication authentication, Model model) {
         if (authentication == null) {
             throw new RuntimeException();

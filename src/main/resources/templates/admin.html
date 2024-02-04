@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+<body>
+<div layout:fragment="content" class="container">
+
+    <h2>List of Users</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="client: ${clients}">
+            <td class="align-middle" th:text="${client.id}">User 1</td>
+            <td class="align-middle" th:text="${client.username}">User 1</td>
+            <td class="align-middle">
+                <form th:method="get" th:action="@{'/admin/client/' + ${client.id}}">
+                    <button type="submit" class="btn btn-success" onclick=""><i class="fa fa-edit"></i>
+                    </button>
+                </form>
+                <br>
+                <form th:method="DELETE" th:action="@{'admin/client/' + ${client.id}}">
+                    <button type="submit" class="btn btn-danger" onclick="confirm('Are you sure?')"><i
+                            class="fa fa-trash"></i></button>
+                </form>
+                <br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h2>List of Staff Employees</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Employee position</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee: ${employees}">
+            <td class="align-middle" th:text="${employee.id}">User 1</td>
+            <td class="align-middle" th:text="${employee.username}">User 1</td>
+            <td class="align-middle" th:text="${employee.role}"></td>
+            <td class="align-middle">
+                <form th:method="get" th:action="@{'/admin/employee/' + ${employee.id}}">
+                    <button type="submit" class="btn btn-success" onclick=""><i class="fa fa-edit"></i>
+                    </button>
+                </form>
+                <br>
+                <form th:method="DELETE" th:action="@{'admin/employees/' + ${employee.id}}">
+                    <button type="submit" class="btn btn-danger" onclick="confirm('Are you sure?')"><i
+                            class="fa fa-trash"></i></button>
+                </form>
+                <br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+</body>
+</html>
