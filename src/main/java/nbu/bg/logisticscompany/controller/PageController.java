@@ -84,16 +84,6 @@ public class PageController {
     }
 
 
-    @GetMapping("/company")
-    @isAdmin
-    public String showCompanyData(Model model) {
-        Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
-
-        companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
-
-        return "company";
-    }
-
     @GetMapping("/company/edit")
     @isAdmin
     public String showCompanyEditForm(Model model) {
@@ -118,7 +108,7 @@ public class PageController {
     @isAdmin
     public String showCompanyCreateForm(Model model) {
         if (companyService.dbHasCompany()) {
-            return "redirect:/company";
+            return "redirect:/admin";
         }
 
         model.addAttribute("company", new CompanyDto());
@@ -126,7 +116,6 @@ public class PageController {
         return "create-company";
     }
 
-    //MIGHT NEED TO CHANGE REDIRECTING WHEN PAGE IS FIXED
     @GetMapping("/company/delete")
     @isAdmin
     public String handleDeleteCompanyGet() {

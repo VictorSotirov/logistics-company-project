@@ -35,7 +35,7 @@ public class CompanyController {
         try {
             companyService.updateCompany(companyDto.getId(), companyDto);
 
-            return "redirect:/company";
+            return "redirect:/admin";
         } catch (IllegalArgumentException | CompanyNotFoundException e) {
             result.rejectValue("id", null, e.getMessage());
 
@@ -48,7 +48,7 @@ public class CompanyController {
     @isAdmin
     public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
         if (companyService.dbHasCompany()) {
-            return "redirect:/company";
+            return "redirect:/admin";
         }
 
         if (result.hasErrors()) {
@@ -58,7 +58,7 @@ public class CompanyController {
         try {
             companyService.createCompany(companyDto);
 
-            return "redirect:/company";
+            return "redirect:/admin";
         } catch (CompanyAlreadyExistsException e) {
             // Handle company already exists exception
             result.rejectValue("name", "error.company", e.getMessage());
@@ -72,7 +72,7 @@ public class CompanyController {
     @isAdmin
     public String deleteCompany(RedirectAttributes redirectAttributes) {
         if (!companyService.dbHasCompany()) {
-            return "redirect:/company";
+            return "redirect:/admin";
         }
 
         try {
@@ -83,7 +83,7 @@ public class CompanyController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        return "redirect:/company";
+        return "redirect:/admin";
     }
 
 }
