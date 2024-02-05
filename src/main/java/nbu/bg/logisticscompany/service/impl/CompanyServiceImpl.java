@@ -5,11 +5,10 @@ import nbu.bg.logisticscompany.exceptions.CompanyAlreadyExistsException;
 import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
 import nbu.bg.logisticscompany.model.entity.Company;
-import nbu.bg.logisticscompany.repository.CompanyRepository;
+import nbu.bg.logisticscompany.repository.*;
 import nbu.bg.logisticscompany.service.CompanyService;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -19,7 +18,9 @@ public class CompanyServiceImpl implements CompanyService
 {
     private final CompanyRepository companyRepository;
 
-    private  final EntityManager entityManager;
+    private final OrderRepository orderRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     public void createCompany(CompanyDto companyToCreate) throws CompanyAlreadyExistsException
@@ -88,12 +89,9 @@ public class CompanyServiceImpl implements CompanyService
             throw new CompanyNotFoundException("Invalid company");
         }
 
-        //ONLY THING LEFT FOR REFACTORING
-        //NEED TO REFACTOR BASED ON HOW USERS ARE HANDLED AND TO CHECK IF OFFICES ARE DELETED
-        entityManager.createNativeQuery("DELETE FROM Company").executeUpdate();
-        entityManager.createNativeQuery("DELETE FROM Orders").executeUpdate();
-        entityManager.createNativeQuery("DELETE FROM Staff").executeUpdate();
-        entityManager.createNativeQuery("DELETE FROM Client").executeUpdate();
+        companyRepository.deleteAll();
+        orderRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     //UTILITY METHOD TO CHECK IF THERE IS A COMPANY IN THE DB
