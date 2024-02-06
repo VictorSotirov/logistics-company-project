@@ -4,13 +4,12 @@
 <div layout:fragment="content" class="container">
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-3">Welcome to UPS </h1>
+        <h1 class="display-3" th:text="'Welcome to ' + ${companyName}"></h1>
         <h3 class="display-4"> Your Trusted Logistics Partner </h3>
-        <p class="lead">
-            At UPS, we redefine logistics by seamlessly connecting supply chains and delivering unparalleled solutions
-            to meet your unique transportation and distribution needs. With a relentless commitment to excellence, we
-            take pride in optimizing your business operations and ensuring the efficient movement of goods across the
-            globe.
+        <p class="lead" th:text="'At ' + ${companyName} + ', we redefine logistics by seamlessly connecting supply chains and delivering unparalleled solutions' +
+            'to meet your unique transportation and distribution needs. With a relentless commitment to excellence, we' +
+            'take pride in optimizing your business operations and ensuring the efficient movement of goods across the globe.'">
+
         </p>
         <br>
         <h1 class="display-4">Pricing</h1>
@@ -68,18 +67,6 @@
             </div>
         </div>
     </div>
-    <script>
-        if (localStorage.getItem("user") === null) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Please log in!',
-                footer: '<a href="/login">Log in</a>'
-            });
-            window.location.replace("/login")
-        }
-    </script>
-
 </div>
 </body>
 </html>

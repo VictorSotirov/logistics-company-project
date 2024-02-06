@@ -10,70 +10,26 @@
                     <h3 class="text-primary">Log in to your profile</h3>
                 </div>
                 <div>
-                    <div class="p-4">
-                        <div class="input-group mb-3">
+                    <p th:if="${loginError}" class="error">Wrong user or password</p>
+                    <form th:action="@{/login}" method="post">
+                        <div class="p-2">
                             <span class="input-group-text bg-primary"><i class="fa fa-user text-white"></i></span>
-                            <input type="text" class="form-control" placeholder="Username" id="username-value">
+                            <input class="form-control" type="text" id="username" name="username"
+                                   placeholder="Username" autofocus="autofocus"/>
                         </div>
-                        <div class="input-group mb-3">
+                        <div class="p-2">
                             <span class="input-group-text bg-primary"><i class="fa fa-lock text-white"></i></span>
-                            <input type="password" class="form-control" placeholder="Password" id="password-value">
+                            <input class="form-control" type="password" id="password" name="password"
+                                   placeholder="Password"/>
                         </div>
-                        <button class="btn btn-primary text-center mt-2" type="submit" id="sign-in-button">
-                            Log in
-                        </button>
-                        <p class="text-center mt-5">No profile created yet?
-                            <span class="text-primary" id='sign-up-button'>Register</span>
-                        </p>
-                    </div>
+                        <div class="p-2">
+                            <input class="btn btn-primary text-center mt-2" type="submit" value="Log in"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        async function submitRegisterForm() {
-            var username = document.querySelector('#username-value').value;
-            var password = document.querySelector('#password-value').value;
-            fetch('http://localhost:8080/api/auth/login', {
-                method: 'POST',
-                headers: new Headers({
-                    "Content-Type": "application/json"
-                }),
-                body: JSON.stringify(
-                    {
-                        "username": username,
-                        "password": password
-                    }
-                )
-            }).then(async function (response) {
-                if (!response.ok) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Something went wrong!',
-                        footer: '<a href="/templates/register">Регистрация</a>'
-                    });
-                } else {
-                    const json = await response.json();
-                    localStorage.setItem("user", JSON.stringify(json));
-                }
-            }).catch(function (reason) {
-                console.log(reason);
-            })
-
-        }
-
-        var submitBtn = document.querySelector('#sign-in-button');
-        submitBtn.addEventListener('click', submitRegisterForm);
-
-        var signUpButton = document.querySelector("#sign-up-button")
-        signUpButton.addEventListener('mouseenter', () => signUpButton.classList.add('border', 'border-primary'));
-        signUpButton.addEventListener('mouseleave', () => signUpButton.classList.remove('border', 'border-primary'));
-
-        signUpButton.addEventListener('click', () => window.location.replace("/register"));
-    </script>
-
 </div>
 </body>
 </html>

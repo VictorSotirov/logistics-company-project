@@ -1,5 +1,8 @@
 package nbu.bg.logisticscompany;
 
+import nbu.bg.logisticscompany.model.entity.Company;
+import nbu.bg.logisticscompany.model.entity.Role;
+import nbu.bg.logisticscompany.model.entity.User;
 import nbu.bg.logisticscompany.model.entity.*;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.repository.OfficeRepository;
@@ -17,7 +20,6 @@ import java.util.List;
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    //Added initial company record
     private final CompanyRepository companyRepository;
     private final OfficeRepository officeRepository;
     boolean alreadySetup = false;
@@ -35,8 +37,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (alreadySetup)
-        {
+        if (alreadySetup) {
             return;
         }
 
@@ -44,8 +45,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                 .name("Speedy")
                 .address("Ralevica 64")
                 .build();
-
-
 
         User admin = User.builder()
                 .roles(new HashSet<>(List.of(new Role("Admin"))))
@@ -73,7 +72,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         //persist company
         companyRepository.save(company);
-
 
         // persist users
         userRepository.save(officeEmp);

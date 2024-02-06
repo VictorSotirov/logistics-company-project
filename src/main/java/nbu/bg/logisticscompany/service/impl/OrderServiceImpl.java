@@ -23,31 +23,9 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderRepository.findAllByOrderByIdDesc();
         List<OrderDto> mappedOrders = new ArrayList<>(orders.size());
         for (Order o : orders) {
-            mappedOrders.add(mapOrderToOrderDTO(o));
+            mappedOrders.add(OrderService.mapOrderToOrderDTO(o));
         }
         return mappedOrders;
-    }
-
-    private OrderDto mapOrderToOrderDTO(Order o) {
-        return OrderDto.builder()
-                .id(o.getId())
-                .orderStatus(o.getStatus())
-                .isOfficeDelivery(o.getIsOfficeDelivery())
-                .deliveryAddress(o.getDeliveryAddress())
-                .weight(o.getWeight())
-                .totalPrice(o.getPrice())
-                .build();
-    }
-
-    private Order mapOrderDtoToOrder(OrderDto input) {
-        return Order.builder()
-                .id(input.getId())
-                .isOfficeDelivery(input.getIsOfficeDelivery())
-                .deliveryAddress(input.getDeliveryAddress())
-                .weight(input.getWeight())
-                .price(input.getTotalPrice())
-                .status(input.getOrderStatus())
-                .build();
     }
 
     @Override
@@ -56,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
         // TODO - Find receiver by given input
         // TODO - Find staff by given input
         input.setOrderStatus(OrderStatus.SENT);
-        Order order = mapOrderDtoToOrder(input);
+        Order order = OrderService.mapOrderDtoToOrder(input);
         orderRepository.save(order);
     }
 
@@ -66,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         if (orderById.isEmpty()) {
             throw new Exception();
         }
-        return mapOrderToOrderDTO(orderById.get());
+        return OrderService.mapOrderToOrderDTO(orderById.get());
     }
 
     @Override
@@ -77,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateOrder(OrderDto orderDto) {
-        Order order = mapOrderDtoToOrder(orderDto);
+        Order order = OrderService.mapOrderDtoToOrder(orderDto);
         orderRepository.save(order);
     }
 }

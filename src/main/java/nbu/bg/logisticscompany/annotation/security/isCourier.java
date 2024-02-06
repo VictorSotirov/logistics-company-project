@@ -1,5 +1,3 @@
-package nbu.bg.logisticscompany.annotation.security;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.lang.annotation.ElementType;

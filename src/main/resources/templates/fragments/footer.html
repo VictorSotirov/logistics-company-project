@@ -1,7 +1,7 @@
-<div th:fragment="footer" class="footer" xmlns:th="http://www.w3.org/1999/xhtml">
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+<div th:fragment="footer" class="footer" >
+    <footer class="pt-4 my-md-5 pt-md-5 border-top" th:if="${companyName}">
         <div class="container">
-            <span class="text-muted">Footer UPS logistics company. &copy; 2024</span>
+            <span class="text-muted" th:text="'Footer ' + ${companyName} + ' logistics company. &copy; 2024'"></span>
         </div>
     </footer>
 </div>

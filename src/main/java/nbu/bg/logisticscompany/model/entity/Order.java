@@ -3,6 +3,7 @@ package nbu.bg.logisticscompany.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Orders")
@@ -42,6 +43,7 @@ public class Order {
     private Boolean isOfficeDelivery;
 
     private Double weight;
-
     private Double price;
+    private LocalDate sendDate;
+    private LocalDate receivedDate;
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import nbu.bg.logisticscompany.annotation.PasswordMatches;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,10 +16,12 @@ import javax.validation.constraints.NotBlank;
 @PasswordMatches
 public class UserRegisterDto {
     @NotBlank
+    @NotNull
     private String username;
     @NotBlank
+    @NotNull
     private String password;
     @NotBlank
+    @NotNull
     private String matchingPassword;
-
 }
