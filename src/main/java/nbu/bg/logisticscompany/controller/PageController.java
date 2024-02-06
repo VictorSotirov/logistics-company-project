@@ -10,8 +10,8 @@ import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 import nbu.bg.logisticscompany.service.CompanyService;
-import nbu.bg.logisticscompany.service.OrderService;
 import nbu.bg.logisticscompany.service.OfficeService;
+import nbu.bg.logisticscompany.service.OrderService;
 import nbu.bg.logisticscompany.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -173,8 +173,7 @@ public class PageController {
     }
 
     @GetMapping("/office/delete/{id}")
-    public String deleteOffice()
-    {
+    public String deleteOffice() {
         return "redirect:/offices";
     }
 

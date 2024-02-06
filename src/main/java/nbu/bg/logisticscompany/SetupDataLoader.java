@@ -3,7 +3,6 @@ package nbu.bg.logisticscompany;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Role;
 import nbu.bg.logisticscompany.model.entity.User;
-import nbu.bg.logisticscompany.model.entity.*;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.repository.OfficeRepository;
 import nbu.bg.logisticscompany.repository.UserRepository;
@@ -27,8 +26,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     public SetupDataLoader(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            CompanyRepository companyRepository,
-                           OfficeRepository officeRepository)
-    {
+                           OfficeRepository officeRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;

@@ -1,10 +1,9 @@
 package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
-import  lombok.NoArgsConstructor;
+import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Office;
-import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
 import nbu.bg.logisticscompany.repository.OfficeRepository;
 import nbu.bg.logisticscompany.service.OfficeService;

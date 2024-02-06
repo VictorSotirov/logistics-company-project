@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<html lang="en" layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <body>
-<div layout:fragment="content" class="container">
+<div class="container" layout:fragment="content">
     <div class="py-5 text-center">
         <h2>Create an Office</h2>
         <p class="lead">Thank you for choosing our logistics company. Use the form below to create a new office:</p>
@@ -12,22 +12,22 @@
 
             <h4 class="mb-3">Office details</h4>
 
-            <form th:action="@{/office}" th:object="${office}" method="post">
+            <form method="post" th:action="@{/office}" th:object="${office}">
 
                 <div class="mb-3">
                     <label for="address">Office Address</label>
-                    <input type="text" th:field="*{address}" class="form-control" id="address"
-                           placeholder="1234 Main St" required>
+                    <input class="form-control" id="address" placeholder="1234 Main St" required
+                           th:field="*{address}" type="text">
                     <div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                        <span th:errors="*{address}" th:if="${#fields.hasErrors('address')}"></span>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="companyId">Company ID</label>
-                    <input type="number" th:field="*{companyId}" class="form-control" id="companyId" required>
+                    <input class="form-control" id="companyId" required th:field="*{companyId}" type="number">
                     <div class="invalid-feedback">
-                        <span th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}"></span>
+                        <span th:errors="*{companyId}" th:if="${#fields.hasErrors('companyId')}"></span>
                     </div>
                 </div>
 

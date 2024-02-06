@@ -1,13 +1,10 @@
 package nbu.bg.logisticscompany.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler
-{
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRegistration.class)
     public String handleInvalidRegistration(final Exception exception) {
@@ -32,8 +29,7 @@ public class GlobalExceptionHandler
     }
 
     @ExceptionHandler(CompanyAlreadyExistsException.class)
-    public String handleCompanyAlreadyExists(final Exception exception)
-    {
+    public String handleCompanyAlreadyExists(final Exception exception) {
         exception.printStackTrace();
 
         return "redirect:/company/create";
