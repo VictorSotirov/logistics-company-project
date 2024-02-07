@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('COURIER')")
+@PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
 public @interface isCourier {
 }
