@@ -17,8 +17,8 @@ import java.util.Optional;
 @Controller
 @AllArgsConstructor
 public class ClientController {
-    private ClientService clientService;
     private final UserRepository userRepository;
+    private ClientService clientService;
 
     @GetMapping("/client/received")
     @isClient

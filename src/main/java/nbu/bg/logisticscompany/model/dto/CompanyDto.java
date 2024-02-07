@@ -2,7 +2,6 @@ package nbu.bg.logisticscompany.model.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -11,8 +10,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Builder
-public class CompanyDto
-{
+public class CompanyDto {
     private Long id;
 
     @NotBlank(message = "Name cannot be blank.")

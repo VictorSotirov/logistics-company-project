@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<html lang="en" layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <body>
-<div layout:fragment="content" class="container">
+<div class="container" layout:fragment="content">
     <div class="py-5 text-center">
         <h2>Deliver an order</h2>
         <p class="lead">At UPS, we value your business, and this Order History page is designed with your convenience in
@@ -39,12 +39,12 @@
                         <td th:text="${order.weight}">Weight</td>
                         <td th:text="${order.totalPrice}">Total price</td>
                         <td>
-                            <form th:method="get" th:action="@{'/order/' + ${order.id}}">
-                                <button type="submit" class="btn btn-success" onclick=""><i class="fa fa-edit"></i>
+                            <form th:action="@{'/order/' + ${order.id}}" th:method="get">
+                                <button class="btn btn-success" onclick="" type="submit"><i class="fa fa-edit"></i>
                                 </button>
                             </form>
-                            <form th:method="DELETE" th:action="@{'/order/' + ${order.id}}">
-                                <button type="submit" class="btn btn-danger" onclick="confirm('Are you sure?')"><i
+                            <form th:action="@{'/order/' + ${order.id}}" th:method="DELETE">
+                                <button class="btn btn-danger" onclick="confirm('Are you sure?')" type="submit"><i
                                         class="fa fa-trash"></i></button>
                             </form>
                         </td>

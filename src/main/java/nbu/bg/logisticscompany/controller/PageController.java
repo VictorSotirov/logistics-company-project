@@ -6,9 +6,11 @@ import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.CompanyDto;
+import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 import nbu.bg.logisticscompany.service.CompanyService;
+import nbu.bg.logisticscompany.service.OfficeService;
 import nbu.bg.logisticscompany.service.OrderService;
 import nbu.bg.logisticscompany.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,8 @@ public class PageController {
     private final UserService userService;
     private final CompanyService companyService;
 
+    private final OfficeService officeService;
+
     @RequestMapping({"/index", "/", "/home"})
     public String index() {
         return "index";
@@ -39,7 +43,7 @@ public class PageController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm() {
+    public String showRegisterPage() {
         return "register";
     }
 
@@ -84,6 +88,15 @@ public class PageController {
     }
 
 
+    @GetMapping("/company")
+    public String showCompanyData(Model model) {
+        Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
+
+        companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
+
+        return "company";
+    }
+
     @GetMapping("/company/edit")
     @isAdmin
     public String showCompanyEditForm(Model model) {
@@ -127,4 +140,41 @@ public class PageController {
     public String showClientOrders(Model model) {
         return "client-orders";
     }
+
+    @GetMapping("/offices")
+    public String showOfficesList(Model model) {
+
+        List<OfficeDto> officeDtoList = officeService.getAllOffices();
+        model.addAttribute("offices", officeDtoList);
+        return "offices";
+    }
+
+    @GetMapping("/office")
+    public String showOfficePage(Model model) {
+        model.addAttribute("office", new OfficeDto());
+        return "create-office";
+    }
+
+    @GetMapping("/office/update/{id}")
+    public String showUpdateOffice(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long officeId = Long.parseLong(id);
+            OfficeDto office = officeService.getOfficeById(officeId);
+
+            if (office == null) {
+                return "offices";
+            }
+            model.addAttribute("office", office);
+        } catch (NumberFormatException e) {
+            return "offices";
+        }
+        return "update-office";
+    }
+
+    @GetMapping("/office/delete/{id}")
+    public String deleteOffice() {
+        return "redirect:/offices";
+    }
+
 }

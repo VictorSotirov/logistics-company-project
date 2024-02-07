@@ -4,6 +4,7 @@ import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Role;
 import nbu.bg.logisticscompany.model.entity.User;
 import nbu.bg.logisticscompany.repository.CompanyRepository;
+import nbu.bg.logisticscompany.repository.OfficeRepository;
 import nbu.bg.logisticscompany.repository.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,14 +20,17 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CompanyRepository companyRepository;
+    private final OfficeRepository officeRepository;
     boolean alreadySetup = false;
 
     public SetupDataLoader(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
-                           CompanyRepository companyRepository) {
+                           CompanyRepository companyRepository,
+                           OfficeRepository officeRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
+        this.officeRepository = officeRepository;
     }
 
     @Override
