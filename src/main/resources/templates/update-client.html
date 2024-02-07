@@ -34,7 +34,17 @@
                         <span th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></span>
                     </div>
                 </div>
+                <h5 class="mb-3">Client role:</h5>
 
+                <div class="mb-3">
+                    <div class="form-check">
+                        <div th:each="role : ${roles}">
+                            <input th:field="*{role}" class="form-check-input" id="role" name="${role}"
+                                   required th:value="${role}" type="radio"/>
+                            <label class=" form-check-label" for="role" th:text="${role}"></label>
+                        </div>
+                    </div>
+                </div>
                 <hr class="mb-4">
 
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Update Client</button>

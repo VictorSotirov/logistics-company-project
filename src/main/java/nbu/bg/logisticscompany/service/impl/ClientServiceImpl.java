@@ -2,17 +2,18 @@ package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.ClientDto;
-import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.entity.*;
 import nbu.bg.logisticscompany.repository.ClientRepository;
 import nbu.bg.logisticscompany.repository.OrderRepository;
+import nbu.bg.logisticscompany.repository.StaffRepository;
 import nbu.bg.logisticscompany.repository.UserRepository;
 import nbu.bg.logisticscompany.service.ClientService;
 import nbu.bg.logisticscompany.service.OrderService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ public class ClientServiceImpl implements ClientService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
+    private final StaffRepository staffRepository;
 
     @Override
     public List<OrderDto> getReceivedOrders(Long id) {
@@ -55,6 +57,29 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> clientOptional = clientRepository.findById(id);
         clientOptional.ifPresent(client -> {
             client.setUsername(updatedClientDto.getUsername());
+            if (updatedClientDto.getRole() != null &&
+                    !updatedClientDto.getRole().isBlank()) {
+                switch (updatedClientDto.getRole().toUpperCase()) {
+                    case "COURIER":
+                        Staff courier = Staff.builder()
+                                .roles(new HashSet<>(List.of(new Role("Courier"))))
+                                .username(client.getUsername())
+                                .password(client.getPassword())
+                                .build();
+                        staffRepository.save(courier);
+                        clientRepository.deleteById(client.getId());
+                        return;
+                    case "OFFICE_EMPLOYEE":
+                        Staff officeEmp = Staff.builder()
+                                .roles(new HashSet<>(List.of(new Role("OfficeEmployee"))))
+                                .username(client.getUsername())
+                                .password(client.getPassword())
+                                .build();
+                        staffRepository.save(officeEmp);
+                        clientRepository.deleteById(client.getId());
+                        return;
+                }
+            }
             clientRepository.save(client);
         });
     }

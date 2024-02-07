@@ -6,12 +6,10 @@ import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.*;
-import nbu.bg.logisticscompany.repository.ClientRepository;
 import nbu.bg.logisticscompany.model.entity.UserRole;
 import nbu.bg.logisticscompany.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,7 +31,7 @@ public class PageController {
     private final OfficeService officeService;
     private final ClientService clientService;
 
-    @RequestMapping({ "/index", "/", "/home", "*" })
+    @RequestMapping({"/index", "/", "/home", "*"})
     public String index() {
         return "index";
     }
@@ -50,12 +48,11 @@ public class PageController {
 
     @PostMapping("/register")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserRegisterDto userDto,
-            HttpServletRequest request) {
+                                            HttpServletRequest request) {
 
         try {
             userService.registerClient(userDto);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ModelAndView mav = new ModelAndView("register", "user", userDto);
             mav.addObject("errorMessage", ex.getMessage());
             return mav;
@@ -167,8 +164,7 @@ public class PageController {
                 return "offices";
             }
             model.addAttribute("office", office);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "offices";
         }
         return "update-office";
@@ -191,6 +187,11 @@ public class PageController {
                 return "admin";
             }
             model.addAttribute("client", client);
+            List<UserRole> roles = Arrays.stream(UserRole.values())
+                    .filter(role -> !role.equals(UserRole.CLIENT))
+                    .filter(userRole -> !userRole.equals(UserRole.ADMIN))
+                    .collect(Collectors.toList());
+            model.addAttribute("roles", roles);
         } catch (NumberFormatException e) {
             return "admin";
         }
@@ -201,7 +202,7 @@ public class PageController {
     public String deleteClient() {
         return "redirect:/admin";
     }
-  
+
     @GetMapping("/admin/employee/{id}")
     public String updateStaff(@PathVariable("id") String id, Model model) {
         try {
@@ -212,13 +213,12 @@ public class PageController {
                 return "admin";
             }
             model.addAttribute("staff", staff);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "admin";
         }
         List<UserRole> roles = Arrays.stream(UserRole.values())
-                          .filter(role -> !role.equals(UserRole.CLIENT))
-                                     .collect(Collectors.toList());
+                .filter(role -> !role.equals(UserRole.CLIENT))
+                .collect(Collectors.toList());
         model.addAttribute("roles", roles);
         return "update-staff-role";
 

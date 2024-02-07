@@ -22,11 +22,17 @@ import java.util.List;
 public class Client extends User {
     @OneToMany(mappedBy = "receiver",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.DETACH})
     private List<Order> receivedOrders;
 
     @OneToMany(mappedBy = "sender",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.DETACH})
     private List<Order> sendOrders;
 }

@@ -10,4 +10,5 @@ import lombok.*;
 public class ClientDto {
     private Long id;
     private String username;
+    private String role;
 }
