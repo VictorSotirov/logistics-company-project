@@ -6,10 +6,15 @@
             <a class="p-2 text-dark" href="/index">Home</a>
             <a class="p-2 text-dark" href="/orders"
                sec:authorize="hasAuthority('COURIER') or hasAuthority('OFFICE_EMPLOYEE') or hasAuthority('ADMIN')">Orders</a>
+            <a class="p-2 text-dark" href="/offices" sec:authorize="hasAuthority('ADMIN')">Offices</a>
             <a class="btn btn-outline-info" href="/order"
                sec:authorize="hasAuthority('OFFICE_EMPLOYEE') or hasAuthority('ADMIN')">Create
                 order</a>
             <a class="p-2 text-dark" href="/client" sec:authorize="hasAuthority('CLIENT')">My Orders</a>
+            <a class="btn btn-outline-info" href="/office"
+               sec:authorize="hasAuthority('ADMIN')">Create
+                offices</a>
+
         </nav>
         <div sec:authorize="!isAuthenticated()">
             <a class="btn btn-outline-primary" href="/login">Sign in</a>

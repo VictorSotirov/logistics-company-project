@@ -5,16 +5,12 @@ import nbu.bg.logisticscompany.annotation.security.isAdmin;
 import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
-import nbu.bg.logisticscompany.model.dto.CompanyDto;
-import nbu.bg.logisticscompany.model.dto.OfficeDto;
-import nbu.bg.logisticscompany.model.dto.OrderDto;
-import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
-import nbu.bg.logisticscompany.service.CompanyService;
-import nbu.bg.logisticscompany.service.OfficeService;
-import nbu.bg.logisticscompany.service.OrderService;
-import nbu.bg.logisticscompany.service.UserService;
+import nbu.bg.logisticscompany.model.dto.*;
+import nbu.bg.logisticscompany.repository.ClientRepository;
+import nbu.bg.logisticscompany.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,6 +27,7 @@ public class PageController {
     private final CompanyService companyService;
 
     private final OfficeService officeService;
+    private final ClientService clientService;
 
     @RequestMapping({"/index", "/", "/home"})
     public String index() {
@@ -175,6 +172,29 @@ public class PageController {
     @GetMapping("/office/delete/{id}")
     public String deleteOffice() {
         return "redirect:/offices";
+    }
+
+
+    @GetMapping("/admin/client/update/{id}")
+    public String showUpdateClient(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long clientId = Long.parseLong(id);
+            ClientDto client = clientService.getClientById(clientId);
+
+            if (client == null) {
+                return "admin";
+            }
+            model.addAttribute("client", client);
+        } catch (NumberFormatException e) {
+            return "admin";
+        }
+        return "update-client";
+    }
+
+    @GetMapping("/admin/client/delete/{id}")
+    public String deleteClient() {
+        return "redirect:/admin";
     }
 
 }
