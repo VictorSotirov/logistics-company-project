@@ -2,9 +2,10 @@ package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.ClientDto;
+import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
-import nbu.bg.logisticscompany.model.entity.User;
-import nbu.bg.logisticscompany.model.entity.UserRole;
+import nbu.bg.logisticscompany.model.entity.*;
+import nbu.bg.logisticscompany.repository.ClientRepository;
 import nbu.bg.logisticscompany.repository.OrderRepository;
 import nbu.bg.logisticscompany.repository.UserRepository;
 import nbu.bg.logisticscompany.service.ClientService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class ClientServiceImpl implements ClientService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
 
     @Override
     public List<OrderDto> getReceivedOrders(Long id) {
@@ -47,10 +50,38 @@ public class ClientServiceImpl implements ClientService {
         return result;
     }
 
+    @Override
+    public void updateClient(Long id, ClientDto updatedClientDto) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        clientOptional.ifPresent(client -> {
+            client.setUsername(updatedClientDto.getUsername());
+            clientRepository.save(client);
+        });
+    }
+
+    @Override
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
+
     private boolean userIsClient(User user) {
         return user.getRoles()
                 .stream()
                 .anyMatch(role -> role.getName().equals(UserRole.CLIENT));
+    }
+
+
+    private ClientDto mapToDTO(Client client) {
+        ClientDto clientDto = new ClientDto();
+        clientDto.setUsername(client.getUsername());
+        clientDto.setId(client.getId());
+        return clientDto;
+    }
+
+    @Override
+    public ClientDto getClientById(Long id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+        return clientOptional.map(this::mapToDTO).orElse(null);
     }
 
 }
