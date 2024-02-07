@@ -62,7 +62,7 @@
                 </form>
                 <br>
                 <form th:action="@{'admin/employees/' + ${employee.id}}" th:method="DELETE">
-                    <button class="btn btn-danger" onclick="confirm('Are you sure?')" type="submit"><i
+                    <button class="btn btn-danger" onclick="return confirmDelete()" type="submit"><i
                             class="fa fa-trash"></i></button>
                 </form>
                 <br>
@@ -93,7 +93,16 @@
         </a>
     </th:block>
 </div>
-
+<script type="text/javascript">
+    function confirmDelete() {
+        if (confirm('Are you sure?')) {
+            document.getElementById('deleteForm').submit();
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 </div>
 </body>
 </html>
