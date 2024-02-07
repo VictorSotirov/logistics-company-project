@@ -19,7 +19,7 @@ public class Office {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "address", unique = true, nullable = false)
+    @Column(name = "address")
     private String address;
 
     @ManyToOne(fetch = FetchType.LAZY,
