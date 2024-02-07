@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
+import nbu.bg.logisticscompany.model.dto.UserDetailsImpl;
 import nbu.bg.logisticscompany.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +24,10 @@ public class OrderController {
         if (result.hasErrors()) {
             return "create-order";
         }
-        System.out.println(order);
-        orderService.create(order);
+        UserDetailsImpl officeEmployee = (UserDetailsImpl) model.getAttribute("currUser");
+        if (officeEmployee != null) {
+            orderService.create(order, officeEmployee.getId());
+        }
         return "redirect:/orders";
     }
 
@@ -34,11 +37,12 @@ public class OrderController {
                               BindingResult result, Model model) {
         System.out.println("Updating order");
         if (result.hasErrors()) {
-            System.out.println("has errors");
             return "update-order";
         }
-        System.out.println("no errors");
-        orderService.updateOrder(order);
+        UserDetailsImpl staff = (UserDetailsImpl) model.getAttribute("currUser");
+        if (staff != null) {
+            orderService.updateOrder(order, staff.getId());
+        }
         return "redirect:/orders";
     }
 

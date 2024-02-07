@@ -59,12 +59,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                 .password(passwordEncoder.encode("client"))
                 .build();
 
+        Client client2 = Client.builder()
+                .roles(new HashSet<>(List.of(new Role("Client"))))
+                .username("sender")
+                .password(passwordEncoder.encode("sender"))
+                .build();
+
+        Client client3 = Client.builder()
+                .roles(new HashSet<>(List.of(new Role("Client"))))
+                .username("receiver")
+                .password(passwordEncoder.encode("receiver"))
+                .build();
+
         //persist company
         companyRepository.save(company);
 
         // persist users
         staffRepository.save(officeEmp);
         clientRepository.save(client);
+        clientRepository.save(client2);
+        clientRepository.save(client3);
+
         staffRepository.save(courier);
         userRepository.save(admin);
 

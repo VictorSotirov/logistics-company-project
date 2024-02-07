@@ -8,7 +8,10 @@ import java.util.List;
 public interface OrderService {
     static OrderDto mapOrderToOrderDTO(Order o) {
         return OrderDto.builder().id(o.getId()).orderStatus(o.getStatus()).isOfficeDelivery(o.getIsOfficeDelivery())
-                .deliveryAddress(o.getDeliveryAddress()).weight(o.getWeight()).totalPrice(o.getPrice()).build();
+                .deliveryAddress(o.getDeliveryAddress()).weight(o.getWeight())
+                .senderUsername(o.getSender().getUsername())
+                .receiverUsername(o.getReceiver().getUsername())
+                .totalPrice(o.getPrice()).build();
     }
 
     static Order mapOrderDtoToOrder(OrderDto input) {
@@ -19,11 +22,11 @@ public interface OrderService {
 
     List<OrderDto> getAllOrders();
 
-    void create(OrderDto order);
+    void create(OrderDto order, Long id);
 
     OrderDto getOrderByID(long id) throws Exception;
 
     void deleteOrder(Long id) throws Exception;
 
-    void updateOrder(OrderDto order);
+    void updateOrder(OrderDto order, Long id);
 }
