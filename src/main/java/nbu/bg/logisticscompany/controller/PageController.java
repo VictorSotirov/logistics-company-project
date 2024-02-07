@@ -32,7 +32,7 @@ public class PageController {
 
     private final OfficeService officeService;
 
-    @RequestMapping({"/index", "/", "/home"})
+    @RequestMapping({"/index", "/", "/home", "*"})
     public String index() {
         return "index";
     }
