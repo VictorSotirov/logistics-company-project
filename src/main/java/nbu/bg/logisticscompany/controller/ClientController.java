@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.entity.User;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class ClientController {
     private final UserRepository userRepository;
     private ClientService clientService;
@@ -23,13 +25,16 @@ public class ClientController {
     @GetMapping("/client/received")
     @isClient
     public String getReceivedOrders(Authentication authentication, Model model) {
+        //checks the authentication
         if (authentication == null) {
             throw new RuntimeException();
         }
+        //finds client by username
         Optional<User> foundUser = userRepository.findByUsername(authentication.getName());
+        //gets client's received orders
         List<OrderDto> receivedOrders = clientService.getReceivedOrders(
                 foundUser.orElseThrow(RuntimeException::new).getId());
-        System.out.println(receivedOrders);
+        log.info(receivedOrders.toString());
         model.addAttribute("receivedOrders", receivedOrders);
         return "received-orders";
     }
@@ -37,12 +42,15 @@ public class ClientController {
     @GetMapping("/client/sent")
     @isClient
     public String getSentOrders(Authentication authentication, Model model) {
+        //checks the authentication
         if (authentication == null) {
             throw new RuntimeException();
         }
+        //finds client by username
         Optional<User> foundUser = userRepository.findByUsername(authentication.getName());
+        //gets client's sent orders
         List<OrderDto> sentOrders = clientService.getSentOrders(foundUser.orElseThrow(RuntimeException::new).getId());
-        System.out.println(sentOrders);
+        log.info(sentOrders.toString());
         model.addAttribute("sentOrders", sentOrders);
         return "sent-orders";
     }

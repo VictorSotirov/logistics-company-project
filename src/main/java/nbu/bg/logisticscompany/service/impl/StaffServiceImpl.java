@@ -29,6 +29,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public StaffDto getStaff(Long id) {
+        //finds existing staff by id and maps it to dto
         return staffRepository.findById(id).map(staff -> new StaffDto(staff.getId(), staff.getUsername(),
                 staff.getRoles().stream().findFirst().toString())).orElseThrow();
     }
