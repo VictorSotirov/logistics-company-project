@@ -6,10 +6,12 @@ import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.*;
+import nbu.bg.logisticscompany.repository.ClientRepository;
 import nbu.bg.logisticscompany.model.entity.UserRole;
 import nbu.bg.logisticscompany.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +31,7 @@ public class PageController {
     private final CompanyService companyService;
 
     private final OfficeService officeService;
+    private final ClientService clientService;
 
     @RequestMapping({ "/index", "/", "/home", "*" })
     public String index() {
@@ -176,6 +179,29 @@ public class PageController {
         return "redirect:/offices";
     }
 
+
+    @GetMapping("/admin/client/update/{id}")
+    public String showUpdateClient(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long clientId = Long.parseLong(id);
+            ClientDto client = clientService.getClientById(clientId);
+
+            if (client == null) {
+                return "admin";
+            }
+            model.addAttribute("client", client);
+        } catch (NumberFormatException e) {
+            return "admin";
+        }
+        return "update-client";
+    }
+
+    @GetMapping("/admin/client/delete/{id}")
+    public String deleteClient() {
+        return "redirect:/admin";
+    }
+  
     @GetMapping("/admin/employee/{id}")
     public String updateStaff(@PathVariable("id") String id, Model model) {
         try {
@@ -190,10 +216,12 @@ public class PageController {
         catch (NumberFormatException e) {
             return "admin";
         }
-        List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
+        List<UserRole> roles = Arrays.stream(UserRole.values())
+                          .filter(role -> !role.equals(UserRole.CLIENT))
                                      .collect(Collectors.toList());
         model.addAttribute("roles", roles);
         return "update-staff-role";
+
     }
 
 }
