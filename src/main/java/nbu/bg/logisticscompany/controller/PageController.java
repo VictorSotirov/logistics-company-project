@@ -31,7 +31,7 @@ public class PageController {
     private final OfficeService officeService;
     private final ClientService clientService;
 
-    @RequestMapping({ "/index", "/", "/home", "*" })
+    @RequestMapping({"/index", "/", "/home", "*"})
     public String index() {
         return "index";
     }
@@ -48,12 +48,11 @@ public class PageController {
 
     @PostMapping("/register")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserRegisterDto userDto,
-            HttpServletRequest request) {
+                                            HttpServletRequest request) {
 
         try {
             userService.registerClient(userDto);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ModelAndView mav = new ModelAndView("register", "user", userDto);
             mav.addObject("errorMessage", ex.getMessage());
             return mav;
@@ -165,8 +164,7 @@ public class PageController {
                 return "offices";
             }
             model.addAttribute("office", office);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "offices";
         }
         return "update-office";
@@ -189,8 +187,12 @@ public class PageController {
                 return "admin";
             }
             model.addAttribute("client", client);
-        }
-        catch (NumberFormatException e) {
+            List<UserRole> roles = Arrays.stream(UserRole.values())
+                    .filter(role -> !role.equals(UserRole.CLIENT))
+                    .filter(userRole -> !userRole.equals(UserRole.ADMIN))
+                    .collect(Collectors.toList());
+            model.addAttribute("roles", roles);
+        } catch (NumberFormatException e) {
             return "admin";
         }
         return "update-client";
@@ -202,24 +204,21 @@ public class PageController {
     }
 
     @GetMapping("/admin/employee/{id}")
-    public String showUpdateStaff(@PathVariable("id") String id, Model model) {
+    public String updateStaff(@PathVariable("id") String id, Model model) {
         try {
             Long staffId = Long.parseLong(id);
-            //finds the existing staff as a dto
             StaffDto staff = staffService.getStaff(staffId);
 
-            //if it doesn't exist do nothing
             if (staff == null) {
                 return "admin";
             }
             model.addAttribute("staff", staff);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "admin";
         }
-        //filters the viable roles for updating the employee, and sets it in the model
-        List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
-                                     .collect(Collectors.toList());
+        List<UserRole> roles = Arrays.stream(UserRole.values())
+                .filter(role -> !role.equals(UserRole.CLIENT))
+                .collect(Collectors.toList());
         model.addAttribute("roles", roles);
         return "update-staff-role";
 

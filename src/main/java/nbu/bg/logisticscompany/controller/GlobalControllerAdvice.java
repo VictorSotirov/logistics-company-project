@@ -20,6 +20,7 @@ public class GlobalControllerAdvice {
         companyService.getCompanyData().ifPresent(companyData -> {
             String companyName = companyData.getName();
             model.addAttribute("companyName", companyName);
+            model.addAttribute("companyId", companyData.getId());
         });
         if (currentUser != null) {
             model.addAttribute("currUser", currentUser);
