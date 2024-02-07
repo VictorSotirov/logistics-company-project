@@ -6,6 +6,8 @@ import nbu.bg.logisticscompany.model.entity.OrderStatus;
 import java.util.List;
 
 public interface StaffService {
+    StaffDto getStaff(Long id);
+
     void updateOrderStatus(Long id, OrderStatus orderStatus) throws Exception;
 
     void updateOrderCourier(Long orderId, Long staffId) throws Exception;

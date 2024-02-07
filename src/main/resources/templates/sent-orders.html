@@ -32,8 +32,8 @@
                     <tr th:each="order: ${sentOrders}">
                         <th th:text="${order.id}"></th>
                         <td th:text="${order.orderStatus}">Status</td>
-                        <td>Sender</td>
-                        <td>Receiver</td>
+                        <td th:text="${order.senderUsername}">Sender</td>
+                        <td th:text="${order.receiverUsername}">Receiver</td>
                         <td th:text="${order.deliveryAddress}">Delivery Address</td>
                         <td th:text="${order.isOfficeDelivery}">Office delivery?</td>
                         <td th:text="${order.weight}">Weight</td>

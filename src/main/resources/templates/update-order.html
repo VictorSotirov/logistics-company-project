@@ -41,20 +41,18 @@
                 <hr class="mb-4">
 
                 <div class="mb-3">
-                    <label for="senderEmail">Sender email</label>
-                    <input class="form-control" id="senderEmail" placeholder="you@example.com" required
-                           th:field="*{senderEmail}" type="email">
+                    <label for="senderUsername">Sender username</label>
+                    <input type="text" th:field="*{senderUsername}" class="form-control" id="senderUsername"  required>
                     <div class="invalid-feedback">
-                        <span th:errors="*{senderEmail}" th:if="${#fields.hasErrors('senderEmail')}"></span>
+                        <span th:if="${#fields.hasErrors('senderUsername')}" th:errors="*{senderUsername}"></span>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="receiverEmail">Receiver email</label>
-                    <input class="form-control" id="receiverEmail" placeholder="you@example.com" required
-                           th:field="*{receiverEmail}" type="email">
+                    <label for="receiverUsername">Receiver username</label>
+                    <input type="text" th:field="*{receiverUsername}" class="form-control" id="receiverUsername"  required>
                     <div class="invalid-feedback">
-                        <span th:errors="*{receiverEmail}" th:if="${#fields.hasErrors('receiverEmail')}"></span>
+                        <span th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></span>
                     </div>
                 </div>
 

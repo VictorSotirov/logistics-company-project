@@ -19,7 +19,11 @@ import java.util.List;
 @Entity
 @SuperBuilder
 public class Staff extends User {
-    @OneToMany(mappedBy = "staff"
+    @OneToMany(mappedBy = "officeEmployee"
             , cascade = CascadeType.ALL)
     private List<Order> processedOrders;
+
+    @OneToMany(mappedBy = "courier"
+            , cascade = CascadeType.ALL)
+    private List<Order> deliveredOrders;
 }

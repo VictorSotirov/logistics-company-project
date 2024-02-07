@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.repository;
 
 import nbu.bg.logisticscompany.model.entity.Order;
+import nbu.bg.logisticscompany.model.entity.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("SELECT order FROM Order order WHERE order.receiver.id = :receiverId")
     List<Order> getAllOrdersByReceiverId(@Param("receiverId") Long receiverId);
+
+    List<Order> findALlByOfficeEmployeeId(Long id);
+
+    List<Order> findAllByStatus(OrderStatus status);
 }
