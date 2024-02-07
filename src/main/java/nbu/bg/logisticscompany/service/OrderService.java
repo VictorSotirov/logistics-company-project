@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.service;
 
 import nbu.bg.logisticscompany.model.dto.OrderDto;
+import nbu.bg.logisticscompany.model.dto.UserDetailsImpl;
 import nbu.bg.logisticscompany.model.entity.Order;
 
 import java.util.List;
@@ -28,5 +29,5 @@ public interface OrderService {
 
     void deleteOrder(Long id) throws Exception;
 
-    void updateOrder(OrderDto order, Long id);
+    void updateOrder(OrderDto order, UserDetailsImpl id);
 }

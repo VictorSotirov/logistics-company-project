@@ -45,7 +45,7 @@ public class StaffServiceImpl implements StaffService {
         OrderDto foundOrder = orderService.getOrderByID(orderId);
         Order updatedOrder = staffRepository.findById(staffId).map(staff -> {
             Order orderEntity = OrderService.mapOrderDtoToOrder(foundOrder);
-            orderEntity.setStaff(staff);
+            orderEntity.setOfficeEmployee(staff);
             return orderEntity;
         }).orElseThrow(RuntimeException::new);
         orderRepository.save(updatedOrder);

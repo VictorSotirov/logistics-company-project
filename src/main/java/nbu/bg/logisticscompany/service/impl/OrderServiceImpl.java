@@ -2,6 +2,7 @@ package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
+import nbu.bg.logisticscompany.model.dto.UserDetailsImpl;
 import nbu.bg.logisticscompany.model.entity.Client;
 import nbu.bg.logisticscompany.model.entity.Order;
 import nbu.bg.logisticscompany.model.entity.OrderStatus;
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = OrderService.mapOrderDtoToOrder(input);
         order.setReceiver(receiver.get());
         order.setSender(sender.get());
-        order.setStaff(officeEmployee.get());
+        order.setOfficeEmployee(officeEmployee.get());
 
         orderRepository.save(order);
     }
@@ -76,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(OrderDto orderDto, Long id) {
+    public void updateOrder(OrderDto orderDto, UserDetailsImpl staff) {
         Optional<Client> receiver = clientRepository.findByUsername(orderDto.getReceiverUsername());
         if (receiver.isEmpty()) {
             throw new RuntimeException("Receiver not found");
@@ -87,15 +88,26 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("Sender not found");
         }
 
-        Optional<Staff> staff = staffRepository.findById(id);
-        if (staff.isEmpty()) {
-            throw new RuntimeException("Staff not found");
-        }
-
         Order order = OrderService.mapOrderDtoToOrder(orderDto);
         order.setReceiver(receiver.get());
         order.setSender(sender.get());
-        order.setStaff(staff.get());
+        if (orderDto.getIsOfficeDelivery()) {
+            // no courier
+            Optional<Staff> officeEmployee = staffRepository.findById(staff.getId());
+            if (officeEmployee.isEmpty()) {
+                throw new RuntimeException("Staff not found");
+            }
+            order.setOfficeEmployee(officeEmployee.get());
+        } else {
+            if (staff.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equalsIgnoreCase("Courier")
+            )) {
+                Optional<Staff> courier = staffRepository.findById(staff.getId());
+                if (courier.isEmpty()) {
+                    throw new RuntimeException("Staff not found");
+                }
+                order.setCourier(courier.get());
+            }
+        }
 
         orderRepository.save(order);
     }

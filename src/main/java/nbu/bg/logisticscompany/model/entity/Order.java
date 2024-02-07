@@ -39,11 +39,16 @@ public class Order {
                     CascadeType.REFRESH,
                     CascadeType.DETACH})
     @JoinColumn(name = "fk_staff")
-    private Staff staff;
+    private Staff officeEmployee;
 
-    // TODO
-    // private Staff courier;  (ManyToOne) with Staff
-    // private Staff officeEmployee; (ManyToOne) with Staff
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.DETACH})
+    @JoinColumn(name = "fk_courier")
+    private Staff courier;
+
     @Enumerated(EnumType.ORDINAL)
     private OrderStatus status;
 

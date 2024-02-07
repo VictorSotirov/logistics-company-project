@@ -41,7 +41,7 @@ public class OrderController {
         }
         UserDetailsImpl staff = (UserDetailsImpl) model.getAttribute("currUser");
         if (staff != null) {
-            orderService.updateOrder(order, staff.getId());
+            orderService.updateOrder(order, staff);
         }
         return "redirect:/orders";
     }
