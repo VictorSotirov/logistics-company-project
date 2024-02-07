@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.annotation.security.isAdmin;
 import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.service.OfficeService;
 import org.springframework.stereotype.Controller;
@@ -17,28 +18,42 @@ public class OfficeController {
     private final OfficeService officeService;
 
     @PostMapping("/office")
+    @isAdmin
     public String createOffice(@Valid OfficeDto officeDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "create-office";
         }
-        officeService.addOffice(officeDto);
+
+        try {
+            officeService.addOffice(officeDto);
+        } catch (Exception e){
+            return "redirect:/404";
+        }
         return "redirect:/offices";
     }
 
     @PutMapping("/office/update/{id}")
+    @isAdmin
     public String updateOffice(@PathVariable("id") Long id,
                                @Valid @ModelAttribute OfficeDto updatedOfficeDto,
                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "update-office";
         }
-        officeService.updateOffice(id, updatedOfficeDto);
+        try {
+            officeService.updateOffice(id, updatedOfficeDto);
+        } catch (Exception e){
+            return "redirect:/404";
+        }
+
         return "redirect:/offices";
     }
 
     @DeleteMapping("/office/delete/{id}")
+    @isAdmin
     public String deleteOffice(@PathVariable("id") Long id) {
         officeService.deleteOffice(id);
         return "redirect:/offices";
     }
+
 }

@@ -25,7 +25,7 @@
 
                 <div class="mb-3">
                     <label for="companyId">Company ID</label>
-                    <input class="form-control" id="companyId" required th:field="*{companyId}" type="number">
+                    <input class="form-control" id="companyId" required th:field="*{companyId}" type="number" th:placeholder="${companyId}">
                     <div class="invalid-feedback">
                         <span th:errors="*{companyId}" th:if="${#fields.hasErrors('companyId')}"></span>
                     </div>

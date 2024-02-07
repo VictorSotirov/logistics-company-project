@@ -29,6 +29,7 @@ public class PageController {
     private final CompanyService companyService;
 
     private final OfficeService officeService;
+    private final ClientService clientService;
 
     @RequestMapping({ "/index", "/", "/home", "*" })
     public String index() {
@@ -176,12 +177,42 @@ public class PageController {
         return "redirect:/offices";
     }
 
+
+    @GetMapping("/admin/client/update/{id}")
+    public String showUpdateClient(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long clientId = Long.parseLong(id);
+            ClientDto client = clientService.getClientById(clientId);
+
+            if (client == null) {
+                return "admin";
+            }
+            model.addAttribute("client", client);
+            List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
+                                         .filter(userRole -> !userRole.equals(UserRole.ADMIN))
+                                         .collect(Collectors.toList());
+            model.addAttribute("roles", roles);
+        }
+        catch (NumberFormatException e) {
+            return "admin";
+        }
+        return "update-client";
+    }
+
+    @GetMapping("/admin/client/delete/{id}")
+    public String deleteClient() {
+        return "redirect:/admin";
+    }
+
     @GetMapping("/admin/employee/{id}")
-    public String updateStaff(@PathVariable("id") String id, Model model) {
+    public String showUpdateStaff(@PathVariable("id") String id, Model model) {
         try {
             Long staffId = Long.parseLong(id);
+            //finds the existing staff as a dto
             StaffDto staff = staffService.getStaff(staffId);
 
+            //if it doesn't exist do nothing
             if (staff == null) {
                 return "admin";
             }
@@ -190,6 +221,7 @@ public class PageController {
         catch (NumberFormatException e) {
             return "admin";
         }
+        //filters the viable roles for updating the employee, and sets it in the model
         List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
                                      .collect(Collectors.toList());
         model.addAttribute("roles", roles);

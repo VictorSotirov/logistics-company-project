@@ -25,12 +25,12 @@
             <td class="align-middle" th:text="${client.id}">User 1</td>
             <td class="align-middle" th:text="${client.username}">User 1</td>
             <td class="align-middle">
-                <form th:action="@{'/admin/client/' + ${client.id}}" th:method="get">
+                <form th:action="@{'/admin/client/update/' + ${client.id}}" th:method="get">
                     <button class="btn btn-success" onclick="" type="submit"><i class="fa fa-edit"></i>
                     </button>
                 </form>
                 <br>
-                <form th:action="@{'admin/client/' + ${client.id}}" th:method="DELETE">
+                <form th:action="@{'/admin/client/delete/' + ${client.id}}" th:method="DELETE">
                     <button class="btn btn-danger" onclick="confirm('Are you sure?')" type="submit"><i
                             class="fa fa-trash"></i></button>
                 </form>
@@ -62,7 +62,7 @@
                 </form>
                 <br>
                 <form th:action="@{'admin/employees/' + ${employee.id}}" th:method="DELETE">
-                    <button class="btn btn-danger" onclick="confirm('Are you sure?')" type="submit"><i
+                    <button class="btn btn-danger" onclick="return confirmDelete()" type="submit"><i
                             class="fa fa-trash"></i></button>
                 </form>
                 <br>
@@ -93,7 +93,16 @@
         </a>
     </th:block>
 </div>
-
+<script type="text/javascript">
+    function confirmDelete() {
+        if (confirm('Are you sure?')) {
+            document.getElementById('deleteForm').submit();
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 </div>
 </body>
 </html>

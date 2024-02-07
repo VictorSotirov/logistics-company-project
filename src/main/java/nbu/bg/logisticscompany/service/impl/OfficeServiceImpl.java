@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.exceptions.CompanyNotFoundException;
 import nbu.bg.logisticscompany.model.dto.OfficeDto;
 import nbu.bg.logisticscompany.model.entity.Company;
 import nbu.bg.logisticscompany.model.entity.Office;
@@ -50,11 +51,17 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
-    public void updateOffice(Long id, OfficeDto updatedOfficeDto) {
+    public void updateOffice(Long id, OfficeDto updatedOfficeDto) throws IllegalArgumentException {
+
+        if (id == null || updatedOfficeDto == null) {
+            throw new IllegalArgumentException("Invalid office");
+        }
+
         Optional<Office> officeOptional = officeRepository.findById(id);
         officeOptional.ifPresent(office -> {
             office.setAddress(updatedOfficeDto.getAddress());
-            Company company = companyRepository.getReferenceById(updatedOfficeDto.getCompanyId());
+            Company company = companyRepository.findById(updatedOfficeDto.getCompanyId())
+                    .orElseThrow(() -> new CompanyNotFoundException("Company with id " + updatedOfficeDto.getCompanyId() + " does not exist."));
 
             office.setCompany(company);
             officeRepository.save(office);
@@ -74,16 +81,16 @@ public class OfficeServiceImpl implements OfficeService {
         Company company = companyRepository.getReferenceById(office.getCompany().getId());
 
         officeDto.setCompanyId(company.getId());
-        System.out.println(officeDto);
         return officeDto;
     }
 
-    private Office mapToEntity(OfficeDto officeDto) {
+    private Office mapToEntity(OfficeDto officeDto) throws CompanyNotFoundException {
         Office office = new Office();
         office.setAddress(officeDto.getAddress());
         office.setId(officeDto.getId());
 
-        Company company = companyRepository.getReferenceById(officeDto.getCompanyId());
+        Company company = companyRepository.findById(officeDto.getCompanyId())
+                .orElseThrow(() -> new CompanyNotFoundException("Company with id " + officeDto.getCompanyId() + " does not exist."));
 
         office.setCompany(company);
         return office;
