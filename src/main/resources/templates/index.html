@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}">
+<html layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <body>
-<div layout:fragment="content" class="container">
+<div class="container" layout:fragment="content">
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-3" th:text="'Welcome to ' + ${companyName}"></h1>
@@ -29,7 +29,7 @@
                             <li>Add-on for address delivery $1.48</li>
                             <br/>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Click here</button>
+                        <button class="btn btn-lg btn-block btn-outline-primary" type="button">Click here</button>
                     </div>
                 </div>
                 <div class="card mb-4 box-shadow">
@@ -45,7 +45,7 @@
                             <li>Add-on for address delivery $4.25</li>
                             <br/>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-primary">Click here</button>
+                        <button class="btn btn-lg btn-block btn-primary" type="button">Click here</button>
                     </div>
                 </div>
                 <div class="card mb-4 box-shadow">
@@ -61,7 +61,7 @@
                             <li>Add-on for each additional KG $0.56</li>
                             <li>Add-on for address delivery $13.98</li>
                         </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-primary">Click here</button>
+                        <button class="btn btn-lg btn-block btn-primary" type="button">Click here</button>
                     </div>
                 </div>
             </div>

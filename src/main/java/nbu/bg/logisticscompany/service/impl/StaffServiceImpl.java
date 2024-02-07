@@ -28,6 +28,12 @@ public class StaffServiceImpl implements StaffService {
     private final UserRepository userRepository;
 
     @Override
+    public StaffDto getStaff(Long id) {
+        return staffRepository.findById(id).map(staff -> new StaffDto(staff.getId(), staff.getUsername(),
+                staff.getRoles().stream().findFirst().toString())).orElseThrow();
+    }
+
+    @Override
     public void updateOrderStatus(Long id, OrderStatus orderStatus) throws Exception {
         OrderDto foundOrder = orderService.getOrderByID(id);
         foundOrder.setOrderStatus(orderStatus);
@@ -39,7 +45,7 @@ public class StaffServiceImpl implements StaffService {
         OrderDto foundOrder = orderService.getOrderByID(orderId);
         Order updatedOrder = staffRepository.findById(staffId).map(staff -> {
             Order orderEntity = OrderService.mapOrderDtoToOrder(foundOrder);
-            orderEntity.setStaff(staff);
+            orderEntity.setOfficeEmployee(staff);
             return orderEntity;
         }).orElseThrow(RuntimeException::new);
         orderRepository.save(updatedOrder);
@@ -50,21 +56,17 @@ public class StaffServiceImpl implements StaffService {
         List<StaffDto> result = new ArrayList<>();
         userRepository.findAll().forEach(user -> {
             if (userIsEmployee(user)) {
-                result.add(StaffDto.builder()
-                        .id(user.getId())
-                        .username(user.getUsername())
-                        .role(user.getRoles().stream().map(role -> role.getName().toString()).collect(Collectors.joining()))
-                        .build());
+                result.add(StaffDto.builder().id(user.getId()).username(user.getUsername())
+                                   .role(user.getRoles().stream().map(role -> role.getName().toString())
+                                             .collect(Collectors.joining())).build());
             }
         });
         return result;
     }
 
     private boolean userIsEmployee(User user) {
-        return user.getRoles()
-                .stream()
-                .anyMatch(role -> role.getName().equals(UserRole.OFFICE_EMPLOYEE)
-                        || role.getName().equals(UserRole.COURIER));
+        return user.getRoles().stream().anyMatch(
+                role -> role.getName().equals(UserRole.OFFICE_EMPLOYEE) || role.getName().equals(UserRole.COURIER));
     }
 
 }

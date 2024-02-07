@@ -1,3 +1,5 @@
+package nbu.bg.logisticscompany.annotation.security;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.lang.annotation.ElementType;
@@ -7,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('COURIER')")
+@PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
 public @interface isCourier {
 }

@@ -5,12 +5,9 @@ import nbu.bg.logisticscompany.annotation.security.isAdmin;
 import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
-import nbu.bg.logisticscompany.model.dto.CompanyDto;
-import nbu.bg.logisticscompany.model.dto.OrderDto;
-import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
-import nbu.bg.logisticscompany.service.CompanyService;
-import nbu.bg.logisticscompany.service.OrderService;
-import nbu.bg.logisticscompany.service.UserService;
+import nbu.bg.logisticscompany.model.dto.*;
+import nbu.bg.logisticscompany.model.entity.UserRole;
+import nbu.bg.logisticscompany.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +15,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class PageController {
     private final OrderService orderService;
     private final UserService userService;
+    private final StaffService staffService;
     private final CompanyService companyService;
 
-    @RequestMapping({"/index", "/", "/home"})
+    private final OfficeService officeService;
+
+    @RequestMapping({ "/index", "/", "/home", "*" })
     public String index() {
         return "index";
     }
@@ -39,18 +41,18 @@ public class PageController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm() {
+    public String showRegisterPage() {
         return "register";
     }
 
     @PostMapping("/register")
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserRegisterDto userDto,
+    public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserRegisterDto userDto,
             HttpServletRequest request) {
 
         try {
             userService.registerClient(userDto);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             ModelAndView mav = new ModelAndView("register", "user", userDto);
             mav.addObject("errorMessage", ex.getMessage());
             return mav;
@@ -83,6 +85,15 @@ public class PageController {
         return "orders";
     }
 
+
+    @GetMapping("/company")
+    public String showCompanyData(Model model) {
+        Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
+
+        companyDtoOptional.ifPresent(companyDto -> model.addAttribute("company", companyDto));
+
+        return "company";
+    }
 
     @GetMapping("/company/edit")
     @isAdmin
@@ -127,4 +138,62 @@ public class PageController {
     public String showClientOrders(Model model) {
         return "client-orders";
     }
+
+    @GetMapping("/offices")
+    public String showOfficesList(Model model) {
+
+        List<OfficeDto> officeDtoList = officeService.getAllOffices();
+        model.addAttribute("offices", officeDtoList);
+        return "offices";
+    }
+
+    @GetMapping("/office")
+    public String showOfficePage(Model model) {
+        model.addAttribute("office", new OfficeDto());
+        return "create-office";
+    }
+
+    @GetMapping("/office/update/{id}")
+    public String showUpdateOffice(@PathVariable("id") String id, Model model) throws Exception {
+
+        try {
+            Long officeId = Long.parseLong(id);
+            OfficeDto office = officeService.getOfficeById(officeId);
+
+            if (office == null) {
+                return "offices";
+            }
+            model.addAttribute("office", office);
+        }
+        catch (NumberFormatException e) {
+            return "offices";
+        }
+        return "update-office";
+    }
+
+    @GetMapping("/office/delete/{id}")
+    public String deleteOffice() {
+        return "redirect:/offices";
+    }
+
+    @GetMapping("/admin/employee/{id}")
+    public String updateStaff(@PathVariable("id") String id, Model model) {
+        try {
+            Long staffId = Long.parseLong(id);
+            StaffDto staff = staffService.getStaff(staffId);
+
+            if (staff == null) {
+                return "admin";
+            }
+            model.addAttribute("staff", staff);
+        }
+        catch (NumberFormatException e) {
+            return "admin";
+        }
+        List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
+                                     .collect(Collectors.toList());
+        model.addAttribute("roles", roles);
+        return "update-staff-role";
+    }
+
 }

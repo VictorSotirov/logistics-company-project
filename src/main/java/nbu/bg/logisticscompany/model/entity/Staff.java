@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.List;
 
 @Getter
@@ -20,7 +19,11 @@ import java.util.List;
 @Entity
 @SuperBuilder
 public class Staff extends User {
-    @OneToMany(mappedBy = "staff"
+    @OneToMany(mappedBy = "officeEmployee"
             , cascade = CascadeType.ALL)
     private List<Order> processedOrders;
+
+    @OneToMany(mappedBy = "courier"
+            , cascade = CascadeType.ALL)
+    private List<Order> deliveredOrders;
 }

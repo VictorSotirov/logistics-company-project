@@ -1,32 +1,32 @@
 <!--CREATE COMPANY FORM, REQUIRES COMPANY NAME AND ADDRESS-->
 <!DOCTYPE html>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<html lang="en" layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <body>
 
-<div layout:fragment="content" class="container">
+<div class="container" layout:fragment="content">
     <h2>Create new company</h2>
 
-    <div th:if="${#fields.hasErrors('company.name')}" class="alert alert-danger">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('company.name')}">
         <p th:errors="*{company.name}"></p>
     </div>
-    <div th:if="${#fields.hasErrors('company.address')}" class="alert alert-danger">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('company.address')}">
         <p th:errors="*{company.address}"></p>
     </div>
 
-    <form th:action="@{/company/create}" th:object="${company}" method="post">
+    <form method="post" th:action="@{/company/create}" th:object="${company}">
 
         <div class="form-group">
             <label for="name">Company name:</label>
-            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter company name">
+            <input class="form-control" id="name" placeholder="Enter company name" th:field="*{name}" type="text">
         </div>
 
         <div class="form-group">
             <label for="address">Company address:</label>
-            <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Enter company name">
+            <input class="form-control" id="address" placeholder="Enter company name" th:field="*{address}" type="text">
         </div>
 
-        <button type="submit" class="btn btn-primary">Create company</button>
-</form>
+        <button class="btn btn-primary" type="submit">Create company</button>
+    </form>
 </div>
 </body>
 </html>

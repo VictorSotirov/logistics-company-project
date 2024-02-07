@@ -4,6 +4,7 @@ import nbu.bg.logisticscompany.model.dto.UserRegisterDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintViolationException;
 
 public class PasswordMatchesValidator
         implements ConstraintValidator<PasswordMatches, Object> {
@@ -15,6 +16,12 @@ public class PasswordMatchesValidator
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
         UserRegisterDto user = (UserRegisterDto) obj;
-        return user.getPassword().equals(user.getMatchingPassword());
+        boolean equals = user.getPassword().equals(user.getMatchingPassword());
+        if (!equals) {
+            throw new ConstraintViolationException("Password "
+                    + user.getPassword() + " is different from "
+                    + user.getMatchingPassword(), null);
+        }
+        return equals;
     }
 }

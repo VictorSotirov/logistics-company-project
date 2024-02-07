@@ -1,41 +1,64 @@
 package nbu.bg.logisticscompany.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+import java.util.Set;
+
 @ControllerAdvice
-public class GlobalExceptionHandler
-{
+@Slf4j
+public class GlobalExceptionHandler {
 
-    @ExceptionHandler(InvalidRegistration.class)
-    public String handleInvalidRegistration(final Exception exception) {
-        exception.printStackTrace();
+    @ExceptionHandler(value = ValidationException.class)
+    public String constraintViolationHandler(HttpServletRequest req,
+                                             Model model,
+                                             ConstraintViolationException exception) {
 
-        return "redirect:/register";
+        StringBuilder errorMsg = new StringBuilder();
+        Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
+
+        if (constraintViolations == null) {
+            log.error("PasswordMatchesValidator throw this exception !");
+            errorMsg.append("Password mismatch!");
+        } else {
+            for (ConstraintViolation cv : constraintViolations) {
+                errorMsg.append(cv.getMessageTemplate() + " ");
+            }
+        }
+        log.error(errorMsg.toString());
+        model.addAttribute("errorMessage", errorMsg);
+        return "register";
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public String handleAll(final Exception exception) {
-        exception.printStackTrace();
-
-        return "redirect:/";
+    @ExceptionHandler(InvalidRegistration.class)
+    public String handleInvalidRegistration(final InvalidRegistration exception) {
+        log.error(exception.getMessage());
+        return "redirect:/register";
     }
 
     //Added exception handling for the Company
     @ExceptionHandler(CompanyNotFoundException.class)
-    public String handleCompanyNotFound(final Exception exception) {
-        exception.printStackTrace();
-
+    public String handleCompanyNotFound(final CompanyNotFoundException exception) {
+        log.error(exception.getMessage());
         return "redirect:/company";
     }
 
     @ExceptionHandler(CompanyAlreadyExistsException.class)
-    public String handleCompanyAlreadyExists(final Exception exception)
-    {
-        exception.printStackTrace();
-
+    public String handleCompanyAlreadyExists(final CompanyAlreadyExistsException exception) {
+        log.error(exception.getMessage());
         return "redirect:/company/create";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String genericExceptionHandler(Exception exception, Model model) {
+        log.error(exception.getMessage());
+        model.addAttribute("errorMessage", "Something went wrong!");
+        return "error";
     }
 }

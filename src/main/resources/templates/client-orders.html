@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<html lang="en" layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <body>
-<div layout:fragment="content" class="container">
+<div class="container" layout:fragment="content">
     <div class="py-5 text-center">
         <h2>View your orders</h2>
         <p class="lead">At UPS, we value your business, and this Order History page is designed with your convenience in
@@ -10,16 +10,16 @@
 
     <div class="rounded d-flex justify-content-center">
 
-        <a class="btn btn-primary text-center mt-2" type="submit" id="sent-button" href="/client/received">
-            Sent
+        <a class="btn btn-primary text-center mt-2" href="/client/received" id="sent-button" type="submit">
+            Received
         </a>
 
         <!-- Add space between buttons -->
         <div style="width: 10px;"></div>
 
-        <a class="btn btn-primary text-center mt-2" type="submit" id="received-button" style="margin-left: 10px;"
-           href="/client/sent">
-            Received
+        <a class="btn btn-primary text-center mt-2" href="/client/sent" id="received-button" style="margin-left: 10px;"
+           type="submit">
+            Sent
         </a>
 
     </div>

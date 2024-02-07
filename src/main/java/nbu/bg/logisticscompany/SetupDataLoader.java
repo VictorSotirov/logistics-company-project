@@ -1,10 +1,8 @@
 package nbu.bg.logisticscompany;
 
-import nbu.bg.logisticscompany.model.entity.Company;
-import nbu.bg.logisticscompany.model.entity.Role;
-import nbu.bg.logisticscompany.model.entity.User;
-import nbu.bg.logisticscompany.repository.CompanyRepository;
-import nbu.bg.logisticscompany.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import nbu.bg.logisticscompany.model.entity.*;
+import nbu.bg.logisticscompany.repository.*;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,19 +13,16 @@ import java.util.List;
 
 
 @Component
+@AllArgsConstructor
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CompanyRepository companyRepository;
-    boolean alreadySetup = false;
+    private final OfficeRepository officeRepository;
+    private final StaffRepository staffRepository;
+    private final ClientRepository clientRepository;
+    static boolean alreadySetup = false;
 
-    public SetupDataLoader(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder,
-                           CompanyRepository companyRepository) {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-        this.companyRepository = companyRepository;
-    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -46,31 +41,46 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                 .password(passwordEncoder.encode("admin"))
                 .build();
 
-        User courier = User.builder()
+        Staff courier = Staff.builder()
                 .roles(new HashSet<>(List.of(new Role("Courier"))))
                 .username("courier")
                 .password(passwordEncoder.encode("courier"))
                 .build();
 
-        User officeEmp = User.builder()
+        Staff officeEmp = Staff.builder()
                 .roles(new HashSet<>(List.of(new Role("OfficeEmployee"))))
                 .username("office_employee")
                 .password(passwordEncoder.encode("office_employee"))
                 .build();
 
-        User client = User.builder()
+        Client client = Client.builder()
                 .roles(new HashSet<>(List.of(new Role("Client"))))
                 .username("client")
                 .password(passwordEncoder.encode("client"))
+                .build();
+
+        Client client2 = Client.builder()
+                .roles(new HashSet<>(List.of(new Role("Client"))))
+                .username("sender")
+                .password(passwordEncoder.encode("sender"))
+                .build();
+
+        Client client3 = Client.builder()
+                .roles(new HashSet<>(List.of(new Role("Client"))))
+                .username("receiver")
+                .password(passwordEncoder.encode("receiver"))
                 .build();
 
         //persist company
         companyRepository.save(company);
 
         // persist users
-        userRepository.save(officeEmp);
-        userRepository.save(client);
-        userRepository.save(courier);
+        staffRepository.save(officeEmp);
+        clientRepository.save(client);
+        clientRepository.save(client2);
+        clientRepository.save(client3);
+
+        staffRepository.save(courier);
         userRepository.save(admin);
 
         alreadySetup = true;

@@ -49,7 +49,6 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-
     @Override
     public String getPassword() {
         return password;

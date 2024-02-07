@@ -15,10 +15,10 @@ import javax.validation.constraints.NotNull;
 public class OrderDto {
     private Long id;
     @NotBlank
-    private String senderEmail;
+    private String senderUsername;
 
     @NotBlank
-    private String receiverEmail;
+    private String receiverUsername;
 
     @NotBlank
     private String deliveryAddress;
@@ -37,8 +37,8 @@ public class OrderDto {
     @Override
     public String toString() {
         return "OrderDto{" +
-                "senderEmail='" + senderEmail + '\'' +
-                ", receiverEmail='" + receiverEmail + '\'' +
+                "senderUsername='" + senderUsername + '\'' +
+                ", receiverUsername='" + receiverUsername + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", isOfficeDelivery=" + isOfficeDelivery +
                 ", weight=" + weight +

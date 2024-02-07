@@ -11,12 +11,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CompanyServiceImplTest
-{
+class CompanyServiceImplTest {
     @InjectMocks
     private CompanyServiceImpl companyService;
 
@@ -33,8 +33,7 @@ class CompanyServiceImplTest
     }
 
     @Test
-    public void testGetCompanyData_Success()
-    {
+    public void testGetCompanyData_Success() {
 
         Company company = Company.builder()
                 .id(1L)
@@ -55,8 +54,7 @@ class CompanyServiceImplTest
     }
 
     @Test
-    public void testGetCompanyData_NotFound()
-    {
+    public void testGetCompanyData_NotFound() {
         when(companyRepository.findById(1L)).thenReturn(Optional.empty());
 
         Optional<CompanyDto> result = companyService.getCompanyData();
@@ -65,7 +63,6 @@ class CompanyServiceImplTest
 
         verify(companyRepository, times(1)).findById(1L);
     }
-
 
 
     @Test
