@@ -13,6 +13,7 @@ import nbu.bg.logisticscompany.repository.StaffRepository;
 import nbu.bg.logisticscompany.service.OrderService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         order.setReceiver(receiver.get());
         order.setSender(sender.get());
         order.setOfficeEmployee(officeEmployee.get());
-
+        order.setSendDate(LocalDate.now());
         orderRepository.save(order);
     }
 
@@ -108,7 +109,9 @@ public class OrderServiceImpl implements OrderService {
                 order.setCourier(courier.get());
             }
         }
-
+        if (order.getStatus().equals(OrderStatus.DELIVERED)) {
+            order.setReceivedDate(LocalDate.now());
+        }
         orderRepository.save(order);
     }
 }
