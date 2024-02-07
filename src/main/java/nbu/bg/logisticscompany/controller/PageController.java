@@ -6,12 +6,10 @@ import nbu.bg.logisticscompany.annotation.security.isClient;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.*;
-import nbu.bg.logisticscompany.repository.ClientRepository;
 import nbu.bg.logisticscompany.model.entity.UserRole;
 import nbu.bg.logisticscompany.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -191,7 +189,8 @@ public class PageController {
                 return "admin";
             }
             model.addAttribute("client", client);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             return "admin";
         }
         return "update-client";
@@ -201,13 +200,15 @@ public class PageController {
     public String deleteClient() {
         return "redirect:/admin";
     }
-  
+
     @GetMapping("/admin/employee/{id}")
-    public String updateStaff(@PathVariable("id") String id, Model model) {
+    public String showUpdateStaff(@PathVariable("id") String id, Model model) {
         try {
             Long staffId = Long.parseLong(id);
+            //finds the existing staff as a dto
             StaffDto staff = staffService.getStaff(staffId);
 
+            //if it doesn't exist do nothing
             if (staff == null) {
                 return "admin";
             }
@@ -216,8 +217,8 @@ public class PageController {
         catch (NumberFormatException e) {
             return "admin";
         }
-        List<UserRole> roles = Arrays.stream(UserRole.values())
-                          .filter(role -> !role.equals(UserRole.CLIENT))
+        //filters the viable roles for updating the employee, and sets it in the model
+        List<UserRole> roles = Arrays.stream(UserRole.values()).filter(role -> !role.equals(UserRole.CLIENT))
                                      .collect(Collectors.toList());
         model.addAttribute("roles", roles);
         return "update-staff-role";
