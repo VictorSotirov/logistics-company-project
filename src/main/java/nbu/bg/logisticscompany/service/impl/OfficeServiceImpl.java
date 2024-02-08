@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Office service.
+ */
 @Service
 @AllArgsConstructor
 public class OfficeServiceImpl implements OfficeService {

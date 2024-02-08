@@ -13,11 +13,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * The type Order controller.
+ */
 @Controller
 @AllArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
+    /**
+     * Create order string.
+     *
+     * @param order  the order
+     * @param result the result
+     * @param model  the model
+     * @return the string
+     */
     @PostMapping("/order")
     @isOfficeEmployee
     public String createOrder(@Valid OrderDto order, BindingResult result, Model model) {
@@ -31,6 +42,15 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    /**
+     * Update order string.
+     *
+     * @param id     the id
+     * @param order  the order
+     * @param result the result
+     * @param model  the model
+     * @return the string
+     */
     @PutMapping("/order/{id}")
     @isStaff
     public String updateOrder(@PathVariable("id") String id, @Valid @ModelAttribute OrderDto order,
@@ -46,6 +66,13 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    /**
+     * Delete order string.
+     *
+     * @param id the id
+     * @return the string
+     * @throws Exception the exception
+     */
     @DeleteMapping("/order/{id}")
     @isStaff
     public String deleteOrder(@PathVariable("id") String id) throws Exception {

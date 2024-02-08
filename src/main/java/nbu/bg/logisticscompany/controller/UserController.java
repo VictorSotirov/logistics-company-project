@@ -13,11 +13,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.validation.Valid;
 
+/**
+ * The type User controller.
+ */
 @Controller
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
+    /**
+     * Update order string.
+     *
+     * @param id     the id
+     * @param user   the user
+     * @param result the result
+     * @param model  the model
+     * @return the string
+     */
     @PutMapping("/user/{id}")
     public String updateOrder(@PathVariable("id") String id,
                               @Valid @ModelAttribute UserUpdateDto user,
@@ -31,6 +43,12 @@ public class UserController {
         return "redirect:/logout";
     }
 
+    /**
+     * Profile page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/profile")
     public String profilePage(Model model) {
         return "profile";

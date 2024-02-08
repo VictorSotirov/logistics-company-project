@@ -6,9 +6,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * The interface Office repository.
+ */
 @Repository
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
+    /**
+     * Find by company id list.
+     *
+     * @param companyId the company id
+     * @return the list
+     */
     List<Office> findByCompanyId(Long companyId);
 
 }

@@ -1,13 +1,28 @@
 package nbu.bg.logisticscompany.model.entity;
 
+/**
+ * The enum User role.
+ */
 public enum UserRole {
-    // Roles of employees/staff of the company
+    /**
+     * The Courier.
+     */
+// Roles of employees/staff of the company
     COURIER,
+    /**
+     * Office employee user role.
+     */
     OFFICE_EMPLOYEE,
 
-    // Role of admin of the company
+    /**
+     * The Admin.
+     */
+// Role of admin of the company
     ADMIN,
 
-    // Role of sender/receiver of orders
+    /**
+     * The Client.
+     */
+// Role of sender/receiver of orders
     CLIENT
 }

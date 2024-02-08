@@ -5,6 +5,9 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * The type Company dto.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

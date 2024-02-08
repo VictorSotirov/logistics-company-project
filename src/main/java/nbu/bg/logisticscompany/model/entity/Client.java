@@ -13,6 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+/**
+ * The type Client.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

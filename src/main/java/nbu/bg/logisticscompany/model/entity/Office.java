@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * The type Office.
+ */
 @Entity
 @Table(name = "Office")
 @Getter

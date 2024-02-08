@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The type User service.
+ */
 @Service
 @AllArgsConstructor
 @Slf4j

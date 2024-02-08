@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+/**
+ * The type Admin controller.
+ */
 @Controller
 @AllArgsConstructor
 public class AdminController {
@@ -32,6 +35,12 @@ public class AdminController {
     private final CompanyService companyService;
     private final AdminService adminService;
 
+    /**
+     * Admin page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("/admin")
     @isAdmin
     public String adminPage(Model model) {
@@ -44,6 +53,12 @@ public class AdminController {
         return "admin";
     }
 
+    /**
+     * Delete client string.
+     *
+     * @param id the id
+     * @return the string
+     */
     @DeleteMapping("/admin/client/delete/{id}")
     @isAdmin
     public String deleteClient(@PathVariable("id") Long id) {
@@ -51,6 +66,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * Update client string.
+     *
+     * @param id               the id
+     * @param updatedClientDto the updated client dto
+     * @param result           the result
+     * @param model            the model
+     * @return the string
+     */
     @PutMapping("/admin/client/update/{id}")
     @isAdmin
     public String updateClient(@PathVariable("id") Long id,
@@ -64,6 +88,14 @@ public class AdminController {
     }
 
 
+    /**
+     * Update staff string.
+     *
+     * @param id       the id
+     * @param staffDto the staff dto
+     * @return the string
+     * @throws Exception the exception
+     */
     @PutMapping("/admin/employee/{id}")
     @isAdmin
     public String updateStaff(@PathVariable("id") String id, @NotNull StaffDto staffDto) throws Exception {
@@ -72,6 +104,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * Delete staff string.
+     *
+     * @param id the id
+     * @return the string
+     */
     @DeleteMapping("/admin/employees/{id}")
     @isAdmin
     public String deleteStaff(@PathVariable("id") long id) {

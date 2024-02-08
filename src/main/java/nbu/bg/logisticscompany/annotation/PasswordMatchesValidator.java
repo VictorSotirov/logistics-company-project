@@ -6,6 +6,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ConstraintViolationException;
 
+/**
+ * The type Password matches validator.
+ */
 public class PasswordMatchesValidator
         implements ConstraintValidator<PasswordMatches, Object> {
 

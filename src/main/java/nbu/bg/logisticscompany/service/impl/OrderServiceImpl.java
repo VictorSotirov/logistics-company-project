@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Order service.
+ */
 @Service
 @AllArgsConstructor
 public class OrderServiceImpl implements OrderService {

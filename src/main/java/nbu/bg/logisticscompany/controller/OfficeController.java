@@ -11,12 +11,23 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * The type Office controller.
+ */
 @Controller
 @AllArgsConstructor
 public class OfficeController {
 
     private final OfficeService officeService;
 
+    /**
+     * Create office string.
+     *
+     * @param officeDto the office dto
+     * @param result    the result
+     * @param model     the model
+     * @return the string
+     */
     @PostMapping("/office")
     @isAdmin
     public String createOffice(@Valid OfficeDto officeDto, BindingResult result, Model model) {
@@ -32,6 +43,15 @@ public class OfficeController {
         return "redirect:/offices";
     }
 
+    /**
+     * Update office string.
+     *
+     * @param id               the id
+     * @param updatedOfficeDto the updated office dto
+     * @param result           the result
+     * @param model            the model
+     * @return the string
+     */
     @PutMapping("/office/update/{id}")
     @isAdmin
     public String updateOffice(@PathVariable("id") Long id,
@@ -49,6 +69,12 @@ public class OfficeController {
         return "redirect:/offices";
     }
 
+    /**
+     * Delete office string.
+     *
+     * @param id the id
+     * @return the string
+     */
     @DeleteMapping("/office/delete/{id}")
     @isAdmin
     public String deleteOffice(@PathVariable("id") Long id) {

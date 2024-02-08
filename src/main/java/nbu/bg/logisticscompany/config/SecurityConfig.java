@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * The type Security config.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -20,17 +23,36 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
 
+    /**
+     * Instantiates a new Security config.
+     *
+     * @param userDetailsService the user details service
+     */
     public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
 
+    /**
+     * Authentication manager authentication manager.
+     *
+     * @param authConfiguration the auth configuration
+     * @return the authentication manager
+     * @throws Exception the exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration)
             throws Exception {
         return authConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * Filter chain security filter chain.
+     *
+     * @param http the http
+     * @return the security filter chain
+     * @throws Exception the exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
@@ -50,6 +72,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Password encoder password encoder.
+     *
+     * @return the password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

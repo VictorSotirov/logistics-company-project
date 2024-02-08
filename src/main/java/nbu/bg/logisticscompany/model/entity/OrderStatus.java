@@ -1,10 +1,22 @@
 package nbu.bg.logisticscompany.model.entity;
 
+/**
+ * The enum Order status.
+ */
 public enum OrderStatus {
-    // Created order but not delivered or picked by courier
+    /**
+     * The Sent.
+     */
+// Created order but not delivered or picked by courier
     SENT,
-    // Courier is delivering the order
+    /**
+     * The In progress.
+     */
+// Courier is delivering the order
     IN_PROGRESS,
-    // Courier has delivered or client has picked up from office
+    /**
+     * The Delivered.
+     */
+// Courier has delivered or client has picked up from office
     DELIVERED;
 }

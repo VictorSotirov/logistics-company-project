@@ -15,12 +15,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+/**
+ * The type Company controller.
+ */
 @Controller
 @AllArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
 
-    //SEND DATA TO CHANGE IN COMPANY EDIT FORM WITH PUT
+    /**
+     * Update company data string.
+     *
+     * @param companyDto the company dto
+     * @param result     the result
+     * @return the string
+     */
+//SEND DATA TO CHANGE IN COMPANY EDIT FORM WITH PUT
     @PutMapping("/company/edit")
     @isAdmin
     public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
@@ -43,7 +53,14 @@ public class CompanyController {
         }
     }
 
-    //SEND DATA IN COMPANY CREATE FORM WITH POST
+    /**
+     * Create new company string.
+     *
+     * @param companyDto the company dto
+     * @param result     the result
+     * @return the string
+     */
+//SEND DATA IN COMPANY CREATE FORM WITH POST
     @PostMapping("/company/create")
     @isAdmin
     public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
@@ -67,7 +84,13 @@ public class CompanyController {
         }
     }
 
-    //DELETE ENTIRE DB SINCE THERE IS ONLY ONE COMPANY IN THE DATABASE
+    /**
+     * Delete company string.
+     *
+     * @param redirectAttributes the redirect attributes
+     * @return the string
+     */
+//DELETE ENTIRE DB SINCE THERE IS ONLY ONE COMPANY IN THE DATABASE
     @PostMapping("/company/delete")
     @isAdmin
     public String deleteCompany(RedirectAttributes redirectAttributes) {

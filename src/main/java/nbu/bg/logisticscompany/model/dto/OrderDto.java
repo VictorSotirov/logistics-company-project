@@ -7,6 +7,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The type Order dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

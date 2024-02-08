@@ -14,12 +14,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Client controller.
+ */
 @Controller
 @AllArgsConstructor
 public class ClientController {
     private final UserRepository userRepository;
     private ClientService clientService;
 
+    /**
+     * Gets received orders.
+     *
+     * @param authentication the authentication
+     * @param model          the model
+     * @return the received orders
+     */
     @GetMapping("/client/received")
     @isClient
     public String getReceivedOrders(Authentication authentication, Model model) {
@@ -34,6 +44,13 @@ public class ClientController {
         return "received-orders";
     }
 
+    /**
+     * Gets sent orders.
+     *
+     * @param authentication the authentication
+     * @param model          the model
+     * @return the sent orders
+     */
     @GetMapping("/client/sent")
     @isClient
     public String getSentOrders(Authentication authentication, Model model) {

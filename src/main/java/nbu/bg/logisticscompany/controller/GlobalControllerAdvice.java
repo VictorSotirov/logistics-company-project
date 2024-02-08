@@ -8,12 +8,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+/**
+ * The type Global controller advice.
+ */
 @ControllerAdvice
 @AllArgsConstructor
 public class GlobalControllerAdvice {
     private final CompanyService companyService;
 
-    //DYNAMICALLY ADDS THE COMPANY NAME TO THE HEADER, FOOTER, AND INDEX PAGE
+    /**
+     * Add attributes.
+     *
+     * @param model       the model
+     * @param currentUser the current user
+     */
+//DYNAMICALLY ADDS THE COMPANY NAME TO THE HEADER, FOOTER, AND INDEX PAGE
     @ModelAttribute
     public void addAttributes(Model model,
                               @AuthenticationPrincipal UserDetailsImpl currentUser) {

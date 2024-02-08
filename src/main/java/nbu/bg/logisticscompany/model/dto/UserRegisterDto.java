@@ -9,6 +9,9 @@ import nbu.bg.logisticscompany.annotation.PasswordMatches;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The type User register dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Staff service.
+ */
 @Service
 @AllArgsConstructor
 public class StaffServiceImpl implements StaffService {

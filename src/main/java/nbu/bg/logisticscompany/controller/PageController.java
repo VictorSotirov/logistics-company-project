@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type Page controller.
+ */
 @Controller
 @AllArgsConstructor
 public class PageController {
@@ -31,21 +34,43 @@ public class PageController {
     private final OfficeService officeService;
     private final ClientService clientService;
 
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @RequestMapping({"/index", "/", "/home", "*"})
     public String index() {
         return "index";
     }
 
+    /**
+     * Show login page string.
+     *
+     * @return the string
+     */
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
     }
 
+    /**
+     * Show register page string.
+     *
+     * @return the string
+     */
     @GetMapping("/register")
     public String showRegisterPage() {
         return "register";
     }
 
+    /**
+     * Register user account model and view.
+     *
+     * @param userDto the user dto
+     * @param request the request
+     * @return the model and view
+     */
     @PostMapping("/register")
     public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserRegisterDto userDto,
                                             HttpServletRequest request) {
@@ -60,6 +85,12 @@ public class PageController {
         return new ModelAndView("login", "user", userDto);
     }
 
+    /**
+     * Show order page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/order")
     @isOfficeEmployee
     public String showOrderPage(Model model) {
@@ -67,6 +98,14 @@ public class PageController {
         return "create-order";
     }
 
+    /**
+     * Show update order string.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the string
+     * @throws Exception the exception
+     */
     @GetMapping("/order/{id}")
     @isStaff
     public String showUpdateOrder(@PathVariable("id") String id, Model model) throws Exception {
@@ -76,6 +115,12 @@ public class PageController {
         return "update-order";
     }
 
+    /**
+     * Show orders list string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/orders")
     @isStaff
     public String showOrdersList(Model model) {
@@ -86,6 +131,12 @@ public class PageController {
     }
 
 
+    /**
+     * Show company data string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/company")
     public String showCompanyData(Model model) {
         Optional<CompanyDto> companyDtoOptional = companyService.getCompanyData();
@@ -95,6 +146,12 @@ public class PageController {
         return "company";
     }
 
+    /**
+     * Show company edit form string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/company/edit")
     @isAdmin
     public String showCompanyEditForm(Model model) {
@@ -115,6 +172,12 @@ public class PageController {
         return "edit-company";
     }
 
+    /**
+     * Show company create form string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/company/create")
     @isAdmin
     public String showCompanyCreateForm(Model model) {
@@ -127,18 +190,35 @@ public class PageController {
         return "create-company";
     }
 
+    /**
+     * Handle delete company get string.
+     *
+     * @return the string
+     */
     @GetMapping("/company/delete")
     @isAdmin
     public String handleDeleteCompanyGet() {
         return "redirect:/index";
     }
 
+    /**
+     * Show client orders string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/client")
     @isClient
     public String showClientOrders(Model model) {
         return "client-orders";
     }
 
+    /**
+     * Show offices list string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/offices")
     public String showOfficesList(Model model) {
 
@@ -147,12 +227,26 @@ public class PageController {
         return "offices";
     }
 
+    /**
+     * Show office page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/office")
     public String showOfficePage(Model model) {
         model.addAttribute("office", new OfficeDto());
         return "create-office";
     }
 
+    /**
+     * Show update office string.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the string
+     * @throws Exception the exception
+     */
     @GetMapping("/office/update/{id}")
     public String showUpdateOffice(@PathVariable("id") String id, Model model) throws Exception {
 
@@ -170,12 +264,25 @@ public class PageController {
         return "update-office";
     }
 
+    /**
+     * Delete office string.
+     *
+     * @return the string
+     */
     @GetMapping("/office/delete/{id}")
     public String deleteOffice() {
         return "redirect:/offices";
     }
 
 
+    /**
+     * Show update client string.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the string
+     * @throws Exception the exception
+     */
     @GetMapping("/admin/client/update/{id}")
     public String showUpdateClient(@PathVariable("id") String id, Model model) throws Exception {
 
@@ -198,11 +305,23 @@ public class PageController {
         return "update-client";
     }
 
+    /**
+     * Delete client string.
+     *
+     * @return the string
+     */
     @GetMapping("/admin/client/delete/{id}")
     public String deleteClient() {
         return "redirect:/admin";
     }
 
+    /**
+     * Update staff string.
+     *
+     * @param id    the id
+     * @param model the model
+     * @return the string
+     */
     @GetMapping("/admin/employee/{id}")
     public String updateStaff(@PathVariable("id") String id, Model model) {
         try {

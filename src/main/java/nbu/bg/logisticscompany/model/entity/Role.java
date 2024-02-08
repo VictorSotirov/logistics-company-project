@@ -4,6 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * The type Role.
+ */
 @Entity
 @Table(name = "Role")
 @Getter
@@ -20,6 +23,11 @@ public class Role {
     @Column(length = 20)
     private UserRole name;
 
+    /**
+     * Instantiates a new Role.
+     *
+     * @param name the name
+     */
     public Role(String name) {
         switch (name) {
             case "Admin":

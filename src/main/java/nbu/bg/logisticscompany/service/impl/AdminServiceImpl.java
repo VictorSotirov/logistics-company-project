@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 
+/**
+ * The type Admin service.
+ */
 @Service
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {

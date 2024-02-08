@@ -6,7 +6,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The interface Client repository.
+ */
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
+    /**
+     * Find by username optional.
+     *
+     * @param username the username
+     * @return the optional
+     */
     Optional<Client> findByUsername(String username);
 }

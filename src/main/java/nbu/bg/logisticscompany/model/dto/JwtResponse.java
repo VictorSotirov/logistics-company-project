@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * The type Jwt response.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

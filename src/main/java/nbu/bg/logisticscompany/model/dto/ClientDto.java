@@ -2,6 +2,9 @@ package nbu.bg.logisticscompany.model.dto;
 
 import lombok.*;
 
+/**
+ * The type Client dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

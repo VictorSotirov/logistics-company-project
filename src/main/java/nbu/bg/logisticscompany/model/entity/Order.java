@@ -5,6 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * The type Order.
+ */
 @Entity
 @Table(name = "Orders")
 @Getter

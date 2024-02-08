@@ -15,9 +15,17 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Swagger config.
+ */
 @Configuration
 public class SwaggerConfig {
 
+    /**
+     * Docket docket.
+     *
+     * @return the docket
+     */
     @Bean
     Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)

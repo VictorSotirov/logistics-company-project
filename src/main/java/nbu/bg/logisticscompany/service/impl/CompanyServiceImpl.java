@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+/**
+ * The type Company service.
+ */
 @Service
 @AllArgsConstructor
 public class CompanyServiceImpl implements CompanyService {

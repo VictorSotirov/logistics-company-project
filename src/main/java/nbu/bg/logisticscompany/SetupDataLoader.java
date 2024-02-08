@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 
 
+/**
+ * The type Setup data loader.
+ */
 @Component
 @AllArgsConstructor
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -21,6 +24,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final OfficeRepository officeRepository;
     private final StaffRepository staffRepository;
     private final ClientRepository clientRepository;
+    /**
+     * The Already setup.
+     */
     static boolean alreadySetup = false;
 
 

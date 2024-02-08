@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The type User login dto.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

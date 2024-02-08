@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+/**
+ * The type Staff.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
