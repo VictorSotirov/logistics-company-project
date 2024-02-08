@@ -33,20 +33,29 @@ public class CompanyController {
 //SEND DATA TO CHANGE IN COMPANY EDIT FORM WITH PUT
     @PutMapping("/company/edit")
     @isAdmin
-    public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
-        if (!companyService.dbHasCompany()) {
-            return "redirect:/company";
+    public String updateCompanyData(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
+    {
+        //IF THERE IS NO COMPANY IN THE DB TO EDIT THE USER IS REDIRECTED TO THE ADMIN PANEL
+        if (!companyService.dbHasCompany())
+        {
+            return "redirect:/admin";
         }
 
-        if (result.hasErrors()) {
+        //IF THERE ARE ANY ERRORS THE EDIT COMPANY FORM IS RELOADED
+        if (result.hasErrors())
+        {
             return "edit-company";
         }
 
-        try {
+        //THE COMPANY CHANGES ARE ATTEMPTED TO BE SAVED AND IF THERE ARE ANY ERRORS A EXCEPTION IS THROWN
+        try
+        {
             companyService.updateCompany(companyDto.getId(), companyDto);
 
             return "redirect:/admin";
-        } catch (IllegalArgumentException | CompanyNotFoundException e) {
+        }
+        catch (IllegalArgumentException | CompanyNotFoundException e)
+        {
             result.rejectValue("id", null, e.getMessage());
 
             return "edit-company";
@@ -63,21 +72,28 @@ public class CompanyController {
 //SEND DATA IN COMPANY CREATE FORM WITH POST
     @PostMapping("/company/create")
     @isAdmin
-    public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
-        if (companyService.dbHasCompany()) {
+    public String createNewCompany(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result)
+    {
+        //IF THERE IS COMPANY IN THE DB THE USER IS REDIRECTED TO THE ADMIN PANEL
+        if (companyService.dbHasCompany())
+        {
             return "redirect:/admin";
         }
 
-        if (result.hasErrors()) {
+        if (result.hasErrors())
+        {
             return "create-company";
         }
 
-        try {
+        //IF THERE ARE ANY ERRORS THE CREATE COMPANY FORM IS RELOADED
+        try
+        {
             companyService.createCompany(companyDto);
 
             return "redirect:/admin";
-        } catch (CompanyAlreadyExistsException e) {
-            // Handle company already exists exception
+        }
+        catch (CompanyAlreadyExistsException e)
+        {
             result.rejectValue("name", "error.company", e.getMessage());
 
             return "create-company";
@@ -93,16 +109,23 @@ public class CompanyController {
 //DELETE ENTIRE DB SINCE THERE IS ONLY ONE COMPANY IN THE DATABASE
     @PostMapping("/company/delete")
     @isAdmin
-    public String deleteCompany(RedirectAttributes redirectAttributes) {
-        if (!companyService.dbHasCompany()) {
+    public String deleteCompany(RedirectAttributes redirectAttributes)
+    {
+        //IF THERE IS NO COMPANY IN THE DB THE USER IS REDIRECTED TO THE ADMIN PANEL
+        if (!companyService.dbHasCompany())
+        {
             return "redirect:/admin";
         }
 
-        try {
+        //THE COMPANY IS ATTEMPTED TO BE DELETED AND
+        try
+        {
             companyService.deleteCompany();
 
             redirectAttributes.addFlashAttribute("successMessage", "Company deleted successfully.");
-        } catch (CompanyNotFoundException e) {
+
+        } catch (CompanyNotFoundException e)
+        {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 

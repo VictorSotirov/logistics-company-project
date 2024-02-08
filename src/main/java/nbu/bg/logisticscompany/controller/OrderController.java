@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nbu.bg.logisticscompany.annotation.security.isOfficeEmployee;
 import nbu.bg.logisticscompany.annotation.security.isStaff;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
  */
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class OrderController {
     private final OrderService orderService;
 
@@ -54,8 +56,8 @@ public class OrderController {
     @PutMapping("/order/{id}")
     @isStaff
     public String updateOrder(@PathVariable("id") String id, @Valid @ModelAttribute OrderDto order,
-                              BindingResult result, Model model) {
-        System.out.println("Updating order");
+            BindingResult result, Model model) {
+        log.info("Updating order");
         if (result.hasErrors()) {
             return "update-order";
         }
@@ -76,9 +78,9 @@ public class OrderController {
     @DeleteMapping("/order/{id}")
     @isStaff
     public String deleteOrder(@PathVariable("id") String id) throws Exception {
-        System.out.println("trying to delete");
+        log.info("trying to delete");
         orderService.deleteOrder(Long.valueOf(id));
-        System.out.println("success deleting");
+        log.info("success deleting");
         return "redirect:/orders";
     }
 

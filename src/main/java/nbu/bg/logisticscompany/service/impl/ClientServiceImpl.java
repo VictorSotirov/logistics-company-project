@@ -31,14 +31,16 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<OrderDto> getReceivedOrders(Long id) {
+        //gets received orders, where client id is receiver id
         return orderRepository.getAllOrdersByReceiverId(id).stream().map(OrderService::mapOrderToOrderDTO)
-                .collect(Collectors.toList());
+                              .collect(Collectors.toList());
     }
 
     @Override
     public List<OrderDto> getSentOrders(Long id) {
+        //gets sent orders, where client id is sender id
         return orderRepository.getAllOrdersBySenderId(id).stream().map(OrderService::mapOrderToOrderDTO)
-                .collect(Collectors.toList());
+                              .collect(Collectors.toList());
     }
 
     @Override
@@ -46,10 +48,7 @@ public class ClientServiceImpl implements ClientService {
         List<ClientDto> result = new ArrayList<>();
         userRepository.findAll().forEach(user -> {
             if (userIsClient(user)) {
-                result.add(ClientDto.builder()
-                        .username(user.getUsername())
-                        .id(user.getId())
-                        .build());
+                result.add(ClientDto.builder().username(user.getUsername()).id(user.getId()).build());
             }
         });
         return result;
@@ -60,24 +59,17 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> clientOptional = clientRepository.findById(id);
         clientOptional.ifPresent(client -> {
             client.setUsername(updatedClientDto.getUsername());
-            if (updatedClientDto.getRole() != null &&
-                    !updatedClientDto.getRole().isBlank()) {
+            if (updatedClientDto.getRole() != null && !updatedClientDto.getRole().isBlank()) {
                 switch (updatedClientDto.getRole().toUpperCase()) {
                     case "COURIER":
-                        Staff courier = Staff.builder()
-                                .roles(new HashSet<>(List.of(new Role("Courier"))))
-                                .username(client.getUsername())
-                                .password(client.getPassword())
-                                .build();
+                        Staff courier = Staff.builder().roles(new HashSet<>(List.of(new Role("Courier"))))
+                                             .username(client.getUsername()).password(client.getPassword()).build();
                         staffRepository.save(courier);
                         clientRepository.deleteById(client.getId());
                         return;
                     case "OFFICE_EMPLOYEE":
-                        Staff officeEmp = Staff.builder()
-                                .roles(new HashSet<>(List.of(new Role("OfficeEmployee"))))
-                                .username(client.getUsername())
-                                .password(client.getPassword())
-                                .build();
+                        Staff officeEmp = Staff.builder().roles(new HashSet<>(List.of(new Role("OfficeEmployee"))))
+                                               .username(client.getUsername()).password(client.getPassword()).build();
                         staffRepository.save(officeEmp);
                         clientRepository.deleteById(client.getId());
                         return;
@@ -93,9 +85,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     private boolean userIsClient(User user) {
-        return user.getRoles()
-                .stream()
-                .anyMatch(role -> role.getName().equals(UserRole.CLIENT));
+        return user.getRoles().stream().anyMatch(role -> role.getName().equals(UserRole.CLIENT));
     }
 
 

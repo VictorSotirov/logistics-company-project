@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nbu.bg.logisticscompany.model.dto.UserUpdateDto;
 import nbu.bg.logisticscompany.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
  */
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -31,12 +33,10 @@ public class UserController {
      * @return the string
      */
     @PutMapping("/user/{id}")
-    public String updateOrder(@PathVariable("id") String id,
-                              @Valid @ModelAttribute UserUpdateDto user,
-                              BindingResult result,
-                              Model model) {
+    public String updateOrder(@PathVariable("id") String id, @Valid @ModelAttribute UserUpdateDto user,
+            BindingResult result, Model model) {
         if (result.hasErrors()) {
-            System.out.println("has errors");
+            log.error("has errors");
             return "profile";
         }
         userService.updateUser(id, user);

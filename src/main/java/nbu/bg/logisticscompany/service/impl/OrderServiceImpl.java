@@ -1,6 +1,7 @@
 package nbu.bg.logisticscompany.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nbu.bg.logisticscompany.model.dto.OrderDto;
 import nbu.bg.logisticscompany.model.dto.UserDetailsImpl;
 import nbu.bg.logisticscompany.model.entity.Client;
@@ -23,6 +24,7 @@ import java.util.Optional;
  */
 @Service
 @AllArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -75,8 +77,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Long id) throws Exception {
-        System.out.println(id);
+    public void deleteOrder(Long id) {
+        log.info(id.toString());
         orderRepository.deleteById(id);
     }
 
@@ -103,8 +105,8 @@ public class OrderServiceImpl implements OrderService {
             }
             order.setOfficeEmployee(officeEmployee.get());
         } else {
-            if (staff.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equalsIgnoreCase("Courier")
-            )) {
+            if (staff.getAuthorities().stream()
+                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equalsIgnoreCase("Courier"))) {
                 Optional<Staff> courier = staffRepository.findById(staff.getId());
                 if (courier.isEmpty()) {
                     throw new RuntimeException("Staff not found");
